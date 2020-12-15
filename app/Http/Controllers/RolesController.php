@@ -13,130 +13,123 @@ use Crater\Currency;
 use Crater\CompanySetting;
 use Crater\Address;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-class RolesController extends Controller
-{
+class RolesController extends Controller{
+
+    public function __construct()
+    {
+        /*$this->middleware('permission:view roles', ['only' => ['index']]);
+        $this->middleware('permission:add roles', ['only' => ['create','store']]);
+        $this->middleware('permission:edit roles', ['only' => ['edit','update']]);
+        $this->middleware('permission:delete roles', ['only' => ['destroy']]);
+        $this->middleware('permission:view role permission', ['only' => ['getRolePermissions']]);
+        $this->middleware('permission:edit role permission', ['only' => ['updateRolePermission']]);*/
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
+
+        /*if($request->ajax()){
+            $roles = Role::get();
+
+            return Datatables::of($roles)
+                ->addColumn('action', function ($role) {
+                    $action = '';
+                    if(Auth::user()->can('view role permission'))
+                        $action .= '<a href="roles/permissions/'. Hashids::encode($role->id).'" class="text-primary" data-toggle="tooltip" title="Change Permission"><i class="fa fa-lg fa-key"></i> </a>';
+                    if(Auth::user()->can('edit roles'))
+                        $action .= '<a href="roles/'. Hashids::encode($role->id).'/edit" class="text-primary" data-toggle="tooltip" title="Edit Role"><i class="fa fa-lg fa-edit"></i> </a>';
+                    if(Auth::user()->can('delete roles'))
+                        $action .= '<a href="roles/'.Hashids::encode($role->id).'" class="text-danger btn-delete" data-toggle="tooltip" title="Delete Role"><i class="fa fa-lg fa-trash"></i></a>';
+
+                    return $action;
+                })
+                ->editColumn('id', 'ID: {{$id}}')
+                ->make(true);
+        }
+        return view('admin.roles.index');*/
+
         $limit = $request->has('limit') ? $request->limit : 10;
 
-        $customers = User::customer()
-            ->applyFilters($request->only([
+        $roles = Role::/*applyFilters($request->only([
                 'search',
                 'contact_name',
-                'display_name',
-                'phone',
                 'orderByField',
                 'orderBy'
             ]))
-            ->whereCompany($request->header('company'))
-            ->select('users.*',
-                DB::raw('sum(invoices.due_amount) as due_amount')
-            )
-            ->groupBy('users.id')
-            ->leftJoin('invoices', 'users.id', '=', 'invoices.user_id')
-            ->paginate($limit);
+
+            ->*/paginate($limit);
 
         $siteData = [
-            'customers' => $customers
+            'roles' => $roles
         ];
 
         return response()->json($siteData);
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(){
+
+        return view('admin.roles.create');
+
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function store(Requests\CustomerRequest $request)
-    {
-        $verifyEmail = User::where('email', $request->email)->first();
-
-
-        $customer = new User();
-        $customer->name = $request->name;
-        $customer->currency_id = $request->currency_id;
-        $customer->company_id = $request->header('company');
-        $customer->email = $request->email;
-        $customer->phone = $request->phone;
-        $customer->company_name = $request->company_name;
-        $customer->contact_name = $request->contact_name;
-        $customer->website = $request->website;
-        $customer->enable_portal = $request->enable_portal;
-        $customer->role = 'customer';
-        $customer->password = Hash::make($request->password);
-        $customer->save();
-
-        if ($request->addresses) {
-            foreach ($request->addresses as $address) {
-                $newAddress = new Address();
-                $newAddress->name = $address["name"];
-                $newAddress->address_street_1 = $address["address_street_1"];
-                $newAddress->address_street_2 = $address["address_street_2"];
-                $newAddress->city = $address["city"];
-                $newAddress->state = $address["state"];
-                $newAddress->country_id = $address["country_id"];
-                $newAddress->zip = $address["zip"];
-                $newAddress->phone = $address["phone"];
-                $newAddress->type = $address["type"];
-                $newAddress->user_id = $customer->id;
-                $newAddress->save();
-                $customer->addresses()->save($newAddress);
-            }
-        }
-
-        $customer = User::with('billingAddress', 'shippingAddress')->find($customer->id);
-
-        return response()->json([
-            'customer' => $customer,
-            'success' => true
+    public function store(Request $request){
+        $this->validate($request,[
+            'name' => 'required|unique:roles,name',
         ]);
+
+        $requestData = $request->all();
+        $requestData['guard_name'] = 'admin';
+
+        Role::create($requestData);
+
+        Session::flash('success', 'Role added!');
+
+        return redirect('admin/roles');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $customer = User::with([
-            'billingAddress',
-            'shippingAddress',
-            'billingAddress.country',
-            'shippingAddress.country',
-        ])->find($id);
-
-        return response()->json([
-            'customer' => $customer
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $customer = User::with('billingAddress', 'shippingAddress')->findOrFail($id);
-        $currency = $customer->currency;
-        $currencies = Currency::all();
 
-        return response()->json([
-            'customer' => $customer,
-            'currencies' => $currencies,
-            'currency' => $currency
-        ]);
+        $id = decodeId($id);
+
+        $role = Role::findOrFail($id);
+
+        return view('admin.roles.edit',compact('role'));
     }
 
     /**
@@ -144,95 +137,88 @@ class RolesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function update($id, Requests\CustomerRequest $request)
+    public function update($id, Request $request)
     {
-        $customer = User::find($id);
 
-        if ($request->email != null) {
-            $verifyEmail = User::where('email', $request->email)->first();
+        $id = decodeId($id);
 
-            if ($verifyEmail) {
-                if ($verifyEmail->id !== $customer->id) {
-                    return response()->json([
-                        'success' => false,
-                        'error' => 'Email already in use'
-                    ]);
-                }
-            }
-        }
-
-        if ($request->has('password')) {
-            $customer->password = Hash::make($request->password);
-        }
-
-        $customer->name = $request->name;
-        $customer->currency_id = $request->currency_id;
-        $customer->email = $request->email;
-        $customer->phone = $request->phone;
-        $customer->company_name = $request->company_name;
-        $customer->contact_name = $request->contact_name;
-        $customer->website = $request->website;
-        $customer->enable_portal = $request->enable_portal;
-        $customer->save();
-
-        $customer->addresses()->delete();
-        if ($request->addresses) {
-            foreach ($request->addresses as $address) {
-                $newAddress = $customer->addresses()->firstOrNew(['type' => $address["type"]]);
-                $newAddress->name = $address["name"];
-                $newAddress->address_street_1 = $address["address_street_1"];
-                $newAddress->address_street_2 = $address["address_street_2"];
-                $newAddress->city = $address["city"];
-                $newAddress->state = $address["state"];
-                $newAddress->country_id = $address["country_id"];
-                $newAddress->zip = $address["zip"];
-                $newAddress->phone = $address["phone"];
-                $newAddress->type = $address["type"];
-                $newAddress->user_id = $customer->id;
-                $newAddress->save();
-            }
-        }
-
-        $customer = User::with('billingAddress', 'shippingAddress')->find($customer->id);
-
-        return response()->json([
-            'customer' => $customer,
-            'success' => true
+        $this->validate($request, [
+            'name' => 'required|unique:roles,name,'.$id,
         ]);
+
+        $requestData = $request->all();
+
+        $role = Role::findOrFail($id);
+
+        $role->update($requestData);
+
+        Session::flash('success', 'Role updated!');
+
+        return redirect('admin/roles');
     }
 
     /**
-     * Remove the specified Customer along side all his/her resources (ie. Estimates, Invoices, Payments and Addresses)
+     * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        User::deleteCustomer($id);
+        $id = Hashids::decode($id)[0];
 
-        return response()->json([
-            'success' => true
-        ]);
+        $role = Role::find($id);
+
+        if($role){
+            $role->delete();
+            $response['message'] = 'Role deleted!';
+            $status = $this->successStatus;
+        }else{
+            $response['message'] = 'Role not exist against this id!';
+            $status = $this->errorStatus;
+        }
+
+        return response()->json(['result'=>$response], $status);
+
     }
 
 
     /**
-     * Remove a list of Customers along side all their resources (ie. Estimates, Invoices, Payments and Addresses)
+     * Get all permissions.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  int  $role_id
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
-    {
-        foreach ($request->id as $id) {
-            User::deleteCustomer($id);
-        }
+    public function getRolePermissions($role_id){
 
-        return response()->json([
-            'success' => true
-        ]);
+        $id = decodeId($role_id);
+
+        $role = Role::find($id);
+
+        $permissions = Permission::all();
+
+        return view('admin.roles.permissions',compact('role','permissions'));
+    }
+
+
+    public function updateRolePermission($role_id, Request $request){
+
+        $id = decodeId($role_id);
+
+        $permissions = $request->permissions;
+
+        $role = Role::findById($id);
+
+        DB::table('role_has_permissions')->where('role_id', $id)->delete();
+
+        $role->syncPermissions($permissions);
+
+        Session::flash('success', 'Permission updated!');
+
+        return redirect('admin/roles');
+
     }
 }

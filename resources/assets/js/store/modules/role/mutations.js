@@ -1,44 +1,44 @@
 import * as types from './mutation-types'
 
 export default {
-  [types.BOOTSTRAP_CUSTOMERS] (state, customers) {
-    state.customers = customers
+  [types.BOOTSTRAP_ROLES] (state, roles) {
+    state.roles = roles
   },
 
-  [types.SET_TOTAL_CUSTOMERS] (state, totalCustomers) {
-    state.totalCustomers = totalCustomers
+  [types.SET_TOTAL_ROLES] (state, totalRoles) {
+    state.totalRoles = totalRoles
   },
 
-  [types.ADD_CUSTOMER] (state, data) {
-    state.customers.push(data.customer)
+  [types.ADD_ROLE] (state, data) {
+    state.roles.push(data.role)
   },
 
-  [types.UPDATE_CUSTOMER] (state, data) {
-    let pos = state.customers.findIndex(customer => customer.id === data.customer.id)
+  [types.UPDATE_ROLE] (state, data) {
+    let pos = state.roles.findIndex(role => role.id === data.role.id)
 
-    state.customers[pos] = data.customer
+    state.roles[pos] = data.role
   },
 
-  [types.DELETE_CUSTOMER] (state, id) {
-    let index = state.customers.findIndex(customer => customer.id === id)
-    state.customers.splice(index, 1)
+  [types.DELETE_ROLE] (state, id) {
+    let index = state.roles.findIndex(role => role.id === id)
+    state.roles.splice(index, 1)
   },
 
-  [types.DELETE_MULTIPLE_CUSTOMERS] (state, selectedCustomers) {
-    selectedCustomers.forEach((customer) => {
-      let index = state.customers.findIndex(_cust => _cust.id === customer.id)
-      state.customers.splice(index, 1)
+  [types.DELETE_MULTIPLE_ROLES] (state, selectedRoles) {
+    selectedRoles.forEach((role) => {
+      let index = state.roles.findIndex(_cust => _cust.id === role.id)
+      state.roles.splice(index, 1)
     })
 
-    state.selectedCustomers = []
+    state.selectedRoles = []
   },
 
-  [types.SET_SELECTED_CUSTOMERS] (state, data) {
-    state.selectedCustomers = data
+  [types.SET_SELECTED_ROLES] (state, data) {
+    state.selectedRoles = data
   },
 
-  [types.RESET_SELECTED_CUSTOMER] (state, data) {
-    state.selectedCustomer = null
+  [types.RESET_SELECTED_ROLE] (state, data) {
+    state.selectedRole = null
   },
 
   [types.SET_SELECT_ALL_STATE] (state, data) {
