@@ -70,21 +70,21 @@
                 <div>
                   <ul>
                     <li>
-                      <input v-model="removelines" :value="1" type="radio" id="f-option" name="selector">
+                      <input v-model="formData.removelines" :value="1"  v-validate="{ required: this.isY }"  type="radio" id="f-option" name="selector">
                       <label for="f-option">Company With Personal Liabaility</label>
                       
                       <div class="check"></div>
                     </li>
                     
                     <li>
-                      <input v-model="removelines"  :value="2" type="radio" id="s-option" name="selector">
+                      <input v-model="formData.removelines"  :value="2" type="radio" id="s-option" name="selector">
                       <label for="s-option">Capital Company</label>
                       
                       <div class="check"></div>
                     </li>
                     
                     <li>
-                      <input v-model="removelines"  :value="3" type="radio" id="t-option" name="selector">
+                      <input v-model="formData.removelines"  :value="3" type="radio" id="t-option" name="selector">
                       <label for="t-option">Public Company / Authority</label>
                       
                       <div class="check"></div>
@@ -442,7 +442,8 @@ export default {
     return {
       isPrivate:false,
       isBusiness:false,
-      removelines: 'b',
+      buttonValue:null,
+      isY:false,
       isCopyFromBilling: false,
       isLoading: false,
       formData: {
@@ -452,8 +453,10 @@ export default {
         phone: null,
         currency_id: null,
         website: null,
+        removelines:null,
         addresses: []
       },
+     
       currency: null,
       billing: {
         name: null,
@@ -497,7 +500,7 @@ export default {
       },
       website: {
         url
-      }
+      },
     },
     billing: {
       address_street_1: {
@@ -588,10 +591,14 @@ export default {
     showForm(){
       this.isPrivate = true;
       this.isBusiness = false;
+      this.buttonValue = 1;
+      this.isY = false;
     },
     hideForm(){
       this.isBusiness = true;
       this.isPrivate = true;
+      this.buttonValue = 2;
+      this.isY = true;
     },
     currencyNameWithCode ({name, code}) {
       return `${code} - ${name}`
@@ -611,6 +618,9 @@ export default {
       this.formData.phone = customer.phone
       this.formData.currency_id = customer.currency_id
       this.formData.website = customer.website
+      this.formData.removelines = customer.removelines
+
+      this.buttonValue = customer.customer_type
 
       if (customer.billing_address) {
         this.billing = customer.billing_address
@@ -658,6 +668,9 @@ export default {
 
       if (this.$v.$invalid) {
         return true
+      }
+      if (this.buttonValue){
+        this.formData.customer_type = this.buttonValue;
       }
       if (this.hasBillingAdd && this.hasShippingAdd) {
         this.formData.addresses = [{...this.billing}, {...this.shipping}]
