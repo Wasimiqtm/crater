@@ -62,7 +62,7 @@ class CustomersController extends Controller
 
         $customer = new User();
         $customer->name = $request->name;
-        $customer->customer_type = $request->customer_type;
+        $customer->customer_type_id = $request->customer_type_id;
         $customer->currency_id = $request->currency_id;
         $customer->company_id = $request->header('company');
         $customer->email = $request->email;

@@ -31,7 +31,7 @@
       <div class="customer-card card">
         <div class="card-body">
           <div class="row">
-            <div class="text-center section-title col-sm-12">{{ $t('customers.customer_type') }}</div>
+            <div class="text-center section-title col-sm-12">{{ $t('customers.customer_type_id') }}</div>
             <div class="col-sm-12">
               <div class="form-group">
                 <div>
@@ -620,7 +620,7 @@ export default {
       this.formData.website = customer.website
       this.formData.removelines = customer.removelines
 
-      this.buttonValue = customer.customer_type
+      this.buttonValue = customer.customer_type_id
 
       if (customer.billing_address) {
         this.billing = customer.billing_address
@@ -670,7 +670,7 @@ export default {
         return true
       }
       if (this.buttonValue){
-        this.formData.customer_type = this.buttonValue;
+        this.formData.customer_type_id = this.buttonValue;
       }
       if (this.hasBillingAdd && this.hasShippingAdd) {
         this.formData.addresses = [{...this.billing}, {...this.shipping}]

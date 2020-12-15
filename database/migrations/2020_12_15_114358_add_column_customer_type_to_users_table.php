@@ -14,7 +14,7 @@ class AddColumnCustomerTypeToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('customer_type', ['1', '2'])->nullable();
+            $table->bigInteger('customer_type_id')->after('role')->nullable();
         });
     }
 
