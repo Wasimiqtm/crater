@@ -9,6 +9,7 @@ import auth from './modules/auth'
 import user from './modules/user'
 import category from './modules/category'
 import customer from './modules/customer'
+import role from './modules/role'
 import company from './modules/company'
 import companyInfo from './modules/settings/company-info'
 import dashboard from './modules/dashboard'
@@ -48,6 +49,7 @@ export default new Vuex.Store({
     company,
     companyInfo,
     customer,
+    role,
     dashboard,
     estimate,
     item,

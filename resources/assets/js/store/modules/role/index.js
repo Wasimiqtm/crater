@@ -3,10 +3,10 @@ import * as actions from './actions'
 import * as getters from './getters'
 
 const initialState = {
-  customers: [],
-  totalCustomers: 0,
+  roles: [],
+  totalRoles: 0,
   selectAllField: false,
-  selectedCustomers: []
+  selectedRoles: []
 }
 
 export default {

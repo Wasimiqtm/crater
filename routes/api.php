@@ -187,6 +187,16 @@ Route::group(['middleware' => 'api'], function () {
 
         Route::resource('customers', 'CustomersController');
 
+        // Roles
+        //----------------------------------
+
+        Route::post('/roles/delete', [
+            'as' => 'roles.delete',
+            'uses' => 'RolesController@delete'
+        ]);
+
+        Route::resource('roles', 'RolesController');
+
 
         // Items
         //----------------------------------

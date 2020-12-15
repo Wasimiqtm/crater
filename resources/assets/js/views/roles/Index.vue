@@ -21,7 +21,7 @@
       <div class="page-actions row">
         <div class="col-xs-2 mr-4">
           <base-button
-            v-show="totalCustomers || filtersApplied"
+            v-show="totalRoles || filtersApplied"
             :outline="true"
             :icon="filterIcon"
             size="large"
@@ -49,7 +49,7 @@
           <div class="col-sm-4">
             <label class="form-label">{{ $t('roles.display_name') }}</label>
             <base-input
-              v-model="filters.display_name"
+              v-model="filters.name"
               type="text"
               name="name"
               autocomplete="off"
@@ -83,15 +83,15 @@
 
     <div v-show="!showEmptyScreen" class="table-container">
       <div class="table-actions mt-5">
-        <p class="table-stats">{{ $t('general.showing') }}: <b>{{ customers.length }}</b> {{ $t('general.of') }} <b>{{ totalCustomers }}</b></p>
+        <p class="table-stats">{{ $t('general.showing') }}: <b>{{ roles.length }}</b> {{ $t('general.of') }} <b>{{ totalRoles }}</b></p>
 
         <transition name="fade">
-          <v-dropdown v-if="selectedCustomers.length" :show-arrow="false">
+          <v-dropdown v-if="selectedRoles.length" :show-arrow="false">
             <span slot="activator" href="#" class="table-actions-button dropdown-toggle">
               {{ $t('general.actions') }}
             </span>
             <v-dropdown-item>
-              <div class="dropdown-item" @click="removeMultipleCustomers">
+              <div class="dropdown-item" @click="removeMultipleRoles">
                 <font-awesome-icon :icon="['fas', 'trash']" class="dropdown-item-icon" />
                 {{ $t('general.delete') }}
               </div>
@@ -106,7 +106,7 @@
           v-model="selectAllFieldStatus"
           type="checkbox"
           class="custom-control-input"
-          @change="selectAllCustomers"
+          @change="selectAllRoles"
         >
         <label for="select-all" class="custom-control-label selectall">
           <span class="select-all-label">{{ $t('general.select_all') }} </span>
@@ -138,12 +138,12 @@
           </template>
         </table-column>
         <table-column
-          :label="$t('customers.display_name')"
+          :label="$t('roles.name')"
           show="name"
         />
 
         <table-column
-          :label="$t('customers.added_on')"
+          :label="$t('roles.added_on')"
           sort-as="created_at"
           show="formattedCreatedAt"
         />
@@ -153,21 +153,21 @@
           cell-class="action-dropdown"
         >
           <template slot-scope="row">
-            <span> {{ $t('customers.action') }} </span>
+            <span> {{ $t('roles.action') }} </span>
             <v-dropdown>
               <a slot="activator" href="#">
                 <dot-icon />
               </a>
               <v-dropdown-item>
 
-                <router-link :to="{path: `customers/${row.id}/edit`}" class="dropdown-item">
+                <router-link :to="{path: `roles/${row.id}/edit`}" class="dropdown-item">
                   <font-awesome-icon :icon="['fas', 'pencil-alt']" class="dropdown-item-icon"/>
                   {{ $t('general.edit') }}
                 </router-link>
 
               </v-dropdown-item>
               <v-dropdown-item>
-                <div class="dropdown-item" @click="removeCustomer(row.id)">
+                <div class="dropdown-item" @click="removeRole(row.id)">
                   <font-awesome-icon :icon="['fas', 'trash']" class="dropdown-item-icon" />
                   {{ $t('general.delete') }}
                 </div>
@@ -201,31 +201,29 @@ export default {
       filtersApplied: false,
       isRequestOngoing: true,
       filters: {
-        display_name: '',
-        contact_name: '',
-        phone: ''
+        name: ''
       }
     }
   },
   computed: {
     showEmptyScreen () {
-      return !this.totalCustomers && !this.isRequestOngoing && !this.filtersApplied
+      return !this.totalRoles && !this.isRequestOngoing && !this.filtersApplied
     },
     filterIcon () {
       return (this.showFilters) ? 'times' : 'filter'
     },
-    ...mapGetters('customer', [
-      'customers',
-      'selectedCustomers',
-      'totalCustomers',
+    ...mapGetters('role', [
+      'roles',
+      'selectedRoles',
+      'totalRoles',
       'selectAllField'
     ]),
     selectField: {
       get: function () {
-        return this.selectedCustomers
+        return this.selectedRoles
       },
       set: function (val) {
-        this.selectCustomer(val)
+        this.selectRole(val)
       }
     },
     selectAllFieldStatus: {
@@ -245,16 +243,16 @@ export default {
   },
   destroyed () {
     if (this.selectAllField) {
-      this.selectAllCustomers()
+      this.selectAllRoles()
     }
   },
   methods: {
-    ...mapActions('customer', [
-      'fetchCustomers',
-      'selectAllCustomers',
-      'selectCustomer',
-      'deleteCustomer',
-      'deleteMultipleCustomers',
+    ...mapActions('role', [
+      'fetchRoles',
+      'selectAllRoles',
+      'selectRole',
+      'deleteRole',
+      'deleteMultipleRoles',
       'setSelectAllState'
     ]),
     refreshTable () {
@@ -262,22 +260,20 @@ export default {
     },
     async fetchData ({ page, filter, sort }) {
       let data = {
-        display_name: this.filters.display_name,
-        contact_name: this.filters.contact_name,
-        phone: this.filters.phone,
+        name: this.filters.name,
         orderByField: sort.fieldName || 'created_at',
         orderBy: sort.order || 'desc',
         page
       }
 
       this.isRequestOngoing = true
-      let response = await this.fetchCustomers(data)
+      let response = await this.fetchRoles(data)
       this.isRequestOngoing = false
 
       return {
-        data: response.data.customers.data,
+        data: response.data.roles.data,
         pagination: {
-          totalPages: response.data.customers.last_page,
+          totalPages: response.data.roles.last_page,
           currentPage: page
         }
       }
@@ -288,9 +284,7 @@ export default {
     },
     clearFilter () {
       this.filters = {
-        display_name: '',
-        contact_name: '',
-        phone: ''
+        name: ''
       }
 
       this.$nextTick(() => {
@@ -305,18 +299,18 @@ export default {
 
       this.showFilters = !this.showFilters
     },
-    async removeCustomer (id) {
+    async removeRole (id) {
       swal({
         title: this.$t('general.are_you_sure'),
-        text: this.$tc('customers.confirm_delete'),
+        text: this.$tc('roles.confirm_delete'),
         icon: '/assets/icon/trash-solid.svg',
         buttons: true,
         dangerMode: true
       }).then(async (willDelete) => {
         if (willDelete) {
-          let res = await this.deleteCustomer(id)
+          let res = await this.deleteRole(id)
           if (res.data.success) {
-            window.toastr['success'](this.$tc('customers.deleted_message'))
+            window.toastr['success'](this.$tc('roles.deleted_message'))
             this.refreshTable()
             return true
           } else if (request.data.error) {
@@ -325,18 +319,18 @@ export default {
         }
       })
     },
-    async removeMultipleCustomers () {
+    async removeMultipleRoles () {
       swal({
         title: this.$t('general.are_you_sure'),
-        text: this.$tc('customers.confirm_delete', 2),
+        text: this.$tc('roles.confirm_delete', 2),
         icon: '/assets/icon/trash-solid.svg',
         buttons: true,
         dangerMode: true
       }).then(async (willDelete) => {
         if (willDelete) {
-          let request = await this.deleteMultipleCustomers()
+          let request = await this.deleteMultipleRoles()
           if (request.data.success) {
-            window.toastr['success'](this.$tc('customers.deleted_message', 2))
+            window.toastr['success'](this.$tc('roles.deleted_message', 2))
             this.refreshTable()
           } else if (request.data.error) {
             window.toastr['error'](request.data.message)
