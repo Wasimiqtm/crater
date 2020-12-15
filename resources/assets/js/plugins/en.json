@@ -155,6 +155,7 @@
     "new_customer": "New Customer",
     "edit_customer": "Edit Customer",
     "basic_info": "Basic Info",
+    "customer_type": "Select Customer Type",
     "billing_address": "Billing Address",
     "shipping_address": "Shipping Address",
     "copy_billing_address": "Copy from Billing",

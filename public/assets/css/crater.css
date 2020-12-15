@@ -2187,22 +2187,12 @@ pre code {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.form-control::-webkit-input-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
 .form-control::-moz-placeholder {
   color: #6c757d;
   opacity: 1;
 }
 
 .form-control:-ms-input-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
-.form-control::-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
 }
@@ -4287,6 +4277,7 @@ input[type=button].btn-block {
   background-color: #007bff;
   border: 0;
   border-radius: 1rem;
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -webkit-appearance: none;
           appearance: none;
@@ -4294,6 +4285,7 @@ input[type=button].btn-block {
 
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-webkit-slider-thumb {
+    -webkit-transition: none;
     transition: none;
   }
 }
@@ -4318,6 +4310,7 @@ input[type=button].btn-block {
   background-color: #007bff;
   border: 0;
   border-radius: 1rem;
+  -moz-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -moz-appearance: none;
        appearance: none;
@@ -4325,6 +4318,7 @@ input[type=button].btn-block {
 
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-moz-range-thumb {
+    -moz-transition: none;
     transition: none;
   }
 }
@@ -4352,12 +4346,14 @@ input[type=button].btn-block {
   background-color: #007bff;
   border: 0;
   border-radius: 1rem;
+  -ms-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-ms-thumb {
+    -ms-transition: none;
     transition: none;
   }
 }
@@ -12259,15 +12255,6 @@ code,
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
-.base-input .input-field::-webkit-input-placeholder {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 21px;
-  color: #B9C1D1;
-}
-
 .base-input .input-field::-moz-placeholder {
   font-family: Poppins;
   font-style: normal;
@@ -12278,15 +12265,6 @@ code,
 }
 
 .base-input .input-field:-ms-input-placeholder {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 21px;
-  color: #B9C1D1;
-}
-
-.base-input .input-field::-ms-input-placeholder {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
@@ -12428,15 +12406,6 @@ code,
   line-height: 21px;
 }
 
-.base-text-area.text-area-field::-webkit-input-placeholder {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 21px;
-  color: #B9C1D1;
-}
-
 .base-text-area.text-area-field::-moz-placeholder {
   font-family: Poppins;
   font-style: normal;
@@ -12447,15 +12416,6 @@ code,
 }
 
 .base-text-area.text-area-field:-ms-input-placeholder {
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 21px;
-  color: #B9C1D1;
-}
-
-.base-text-area.text-area-field::-ms-input-placeholder {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
@@ -13826,9 +13786,7 @@ table.full-width {
 .hamburger {
   display: inline-block;
   cursor: pointer;
-  transition-property: opacity, -webkit-filter;
   transition-property: opacity, filter;
-  transition-property: opacity, filter, -webkit-filter;
   transition-duration: 0.15s;
   transition-timing-function: linear;
   font: inherit;
@@ -14669,19 +14627,11 @@ fieldset[disabled] .multiselect {
   vertical-align: top;
 }
 
-.multiselect__input::-webkit-input-placeholder {
-  color: #B9C1D1;
-}
-
 .multiselect__input::-moz-placeholder {
   color: #B9C1D1;
 }
 
 .multiselect__input:-ms-input-placeholder {
-  color: #B9C1D1;
-}
-
-.multiselect__input::-ms-input-placeholder {
   color: #B9C1D1;
 }
 
@@ -17278,13 +17228,6 @@ fieldset[disabled] .multiselect {
   color: #595959;
 }
 
-.invoice-create-page .item-row .item-description textarea::-webkit-input-placeholder {
-  font-family: Poppins;
-  font-style: normal;
-  font-size: 12px;
-  color: #B9C1D1;
-}
-
 .invoice-create-page .item-row .item-description textarea::-moz-placeholder {
   font-family: Poppins;
   font-style: normal;
@@ -17293,13 +17236,6 @@ fieldset[disabled] .multiselect {
 }
 
 .invoice-create-page .item-row .item-description textarea:-ms-input-placeholder {
-  font-family: Poppins;
-  font-style: normal;
-  font-size: 12px;
-  color: #B9C1D1;
-}
-
-.invoice-create-page .item-row .item-description textarea::-ms-input-placeholder {
   font-family: Poppins;
   font-style: normal;
   font-size: 12px;
@@ -18181,13 +18117,6 @@ fieldset[disabled] .multiselect {
   color: #595959;
 }
 
-.estimate-create-page .item-row .item-description textarea::-webkit-input-placeholder {
-  font-family: Poppins;
-  font-style: normal;
-  font-size: 12px;
-  color: #B9C1D1;
-}
-
 .estimate-create-page .item-row .item-description textarea::-moz-placeholder {
   font-family: Poppins;
   font-style: normal;
@@ -18196,13 +18125,6 @@ fieldset[disabled] .multiselect {
 }
 
 .estimate-create-page .item-row .item-description textarea:-ms-input-placeholder {
-  font-family: Poppins;
-  font-style: normal;
-  font-size: 12px;
-  color: #B9C1D1;
-}
-
-.estimate-create-page .item-row .item-description textarea::-ms-input-placeholder {
   font-family: Poppins;
   font-style: normal;
   font-size: 12px;
