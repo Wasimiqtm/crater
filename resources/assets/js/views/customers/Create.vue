@@ -31,12 +31,12 @@
       <div class="customer-card card">
         <div class="card-body">
           <div class="row">
-            <div class="text-center section-title col-sm-12">{{ $t('customers.customer_type_id') }}</div>
+            <div class="text-center section-title col-sm-12">{{ $t('customers.customer_type') }}</div>
             <div class="col-sm-12">
               <div class="form-group">
                 <div>
-                  <button @click="showForm" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="private_btn">Private customer</button>
-                  <button @click="hideForm" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="business_btn">Business customer</button>
+                  <button @click="showForm" :class="{ 'active':  isP  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="private_btn">Private customer</button>
+                  <button @click="hideForm" :class="{ 'active':  isB  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="business_btn">Business customer</button>
                 </div>
                 <!-- <label class="form-label">{{ $t('customers.display_name') }}</label><span class="text-danger"> *</span> -->
                 <!-- <base-input
@@ -443,7 +443,8 @@ export default {
       isPrivate:false,
       isBusiness:false,
       buttonValue:null,
-      isY:false,
+      isP:false,
+      isB:false,
       isCopyFromBilling: false,
       isLoading: false,
       formData: {
@@ -592,13 +593,15 @@ export default {
       this.isPrivate = true;
       this.isBusiness = false;
       this.buttonValue = 1;
-      this.isY = false;
+      this.isP = true;
+      this.isB = false;
     },
     hideForm(){
       this.isBusiness = true;
       this.isPrivate = true;
       this.buttonValue = 2;
-      this.isY = true;
+      this.isP = false;
+      this.isB = true;
     },
     currencyNameWithCode ({name, code}) {
       return `${code} - ${name}`
