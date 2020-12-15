@@ -9,6 +9,8 @@
     "payments": "المدفوعات",
     "reports": "التقارير",
     "settings": "الإعدادات",
+    "roles": "الأدوار",
+    "permissions": "أذونات",
     "logout": "خروج"
   },
   "general": {
@@ -792,7 +794,7 @@
       "running_migrations": "إدارة عمليات الترحيل",
       "finishing_update": "تحديث التشطيب",
       "update_failed": "فشل التحديث",
-      "update_failed_text": "آسف! فشل التحديث الخاص بك في: {step} خطوة"     
+      "update_failed_text": "آسف! فشل التحديث الخاص بك في: {step} خطوة"
     }
   },
   "wizard": {

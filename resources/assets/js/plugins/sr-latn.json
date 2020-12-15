@@ -9,6 +9,8 @@
     "payments": "Plaćanja",
     "reports": "Izveštaji",
     "settings": "Podešavanja",
+    "roles": "Roles",
+    "permissions": "Permissions",
     "logout": "Odjavi se"
   },
   "general": {
@@ -862,9 +864,9 @@
       "secret": "Šifra",
       "mailgun_secret": "Mailgun Šifra",
       "mailgun_domain": "Domen",
-      "mailgun_endpoint": "Mailgun Endpoint", 
+      "mailgun_endpoint": "Mailgun Endpoint",
       "ses_secret": "SES Šifra",
-      "ses_key": "SES Ključ", 
+      "ses_key": "SES Ključ",
       "password": "Šifra za e-mail",
       "username": "Koristničko ime za e-mail",
       "mail_config": "E-mail konfigurisanje",

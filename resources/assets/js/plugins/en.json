@@ -9,6 +9,8 @@
     "payments": "Payments",
     "reports": "Reports",
     "settings": "Settings",
+    "roles": "Roles",
+    "permissions": "Permissions",
     "logout": "Logout"
   },
   "general": {
@@ -169,6 +171,51 @@
     "updated_message": "Customer updated successfully",
     "deleted_message": "Customer deleted successfully | Customers deleted successfully"
   },
+  "roles": {
+    "title": "Roles",
+    "add_role": "Add Role",
+    "contacts_list": "Role List",
+    "name": "Name",
+    "display_name": "Display Name",
+    "primary_contact_name": "Primary Contact Name",
+    "contact_name": "Contact Name",
+    "amount_due": "Amount Due",
+    "email": "Email",
+    "address": "Address",
+    "phone": "Phone",
+    "website": "Website",
+    "country": "Country",
+    "state": "State",
+    "city": "City",
+    "zip_code": "Zip Code",
+    "added_on": "Added On",
+    "action": "Action",
+    "password": "Password",
+    "street_number": "Street Number",
+    "primary_currency": "Primary Currency",
+    "add_new_role": "Add New Role",
+    "save_role": "Save Role",
+    "update_role": "Update Role",
+    "role": "Role | Roles",
+    "new_role": "New Customer",
+    "edit_role": "Edit Role",
+    "basic_info": "Basic Info",
+    "billing_address": "Billing Address",
+    "shipping_address": "Shipping Address",
+    "copy_billing_address": "Copy from Billing",
+    "no_role": "No roles yet!",
+    "no_roles_found": "No roles found!",
+    "list_of_roles": "This section will contain the list of roles.",
+    "primary_display_name": "Primary Display Name",
+    "select_currency": "Select currency",
+    "select_a_role": "Select a Role",
+    "type_or_click": "Type or click to select",
+
+    "confirm_delete": "You will not be able to recover this Role and all the related Invoices, Estimates and Payments. | You will not be able to recover these customers and all the related Invoices, Estimates and Payments.",
+    "created_message": "Role created successfully",
+    "updated_message": "Role updated successfully",
+    "deleted_message": "Role deleted successfully | Roles deleted successfully"
+    },
   "items": {
     "title": "Items",
     "items_list": "Items List",
@@ -802,7 +849,7 @@
       "running_migrations": "Running Migrations",
       "finishing_update": "Finishing Update",
       "update_failed": "Update Failed",
-      "update_failed_text": "Sorry! Your update failed on : {step} step"   
+      "update_failed_text": "Sorry! Your update failed on : {step} step"
     }
   },
   "wizard": {

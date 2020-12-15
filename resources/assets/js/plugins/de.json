@@ -9,6 +9,8 @@
     "payments": "Zahlungen",
     "reports": "Berichte",
     "settings": "Einstellungen",
+    "roles": "Roles",
+    "permissions": "Permissions",
     "logout": "Abmelden"
   },
   "general": {
@@ -789,7 +791,7 @@
       "running_migrations": "Ausführen von Migrationen",
       "finishing_update": "Update beenden",
       "update_failed": "Update fehlgeschlagen",
-      "update_failed_text": "Es tut uns leid! Ihr Update ist am folgenden Schritt fehlgeschlagen: {step}"      
+      "update_failed_text": "Es tut uns leid! Ihr Update ist am folgenden Schritt fehlgeschlagen: {step}"
     }
   },
   "wizard": {

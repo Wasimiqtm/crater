@@ -9,6 +9,8 @@
     "payments": "Paiements",
     "reports": "Rapports",
     "settings": "Paramètres",
+      "roles": "les rôles",
+      "permissions": "Autorisations",
     "logout": "Se déconnecter"
   },
   "general": {

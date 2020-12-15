@@ -34,6 +34,10 @@ import Dashboard from './views/dashboard/Dashboard.vue'
 import CustomerIndex from './views/customers/Index.vue'
 import CustomerCreate from './views/customers/Create.vue'
 
+// Roles
+import RoleIndex from './views/roles/Index.vue'
+import RoleCreate from './views/roles/Create.vue'
+
 // Items
 import ItemsIndex from './views/items/Index.vue'
 import ItemCreate from './views/items/Create.vue'
@@ -357,7 +361,22 @@ const routes = [
             component: UpdateApp
           }
         ]
-      }
+      },
+      // Roles
+      {
+        path: 'roles',
+        component: RoleIndex
+      },
+      {
+        path: 'roles/create',
+        name: 'roles.create',
+        component: RoleCreate
+      },
+      {
+        path: 'roles/:id/edit',
+        name: 'roles.edit',
+        component: RoleCreate
+      },
     ]
   },
 

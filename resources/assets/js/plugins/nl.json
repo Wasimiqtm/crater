@@ -9,6 +9,8 @@
         "payments": "Betalingen",
         "reports": "Rapporten",
         "settings": "Instellingen",
+        "roles": "Roles",
+        "permissions": "Permissions",
         "logout": "Uitloggen"
     },
     "general": {

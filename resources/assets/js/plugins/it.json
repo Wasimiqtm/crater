@@ -10,6 +10,8 @@
     "payments": "Pagamenti",
     "reports": "Reports",
     "settings": "Configurazione",
+    "roles": "Roles",
+    "permissions": "Permissions",
     "logout": "Logout"
   },
   "general": {

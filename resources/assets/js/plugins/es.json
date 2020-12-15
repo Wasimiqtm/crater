@@ -9,11 +9,13 @@
     "payments": "Pagos",
     "reports": "Informes",
     "settings": "Configuraciones",
+    "roles": "Roles",
+    "permissions": "Permissions",
     "logout": "Cerrar sesión"
   },
   "general": {
     "view_pdf": "Ver PDF",
-    "copy_pdf_url": "Copiar URL del PDF",      
+    "copy_pdf_url": "Copiar URL del PDF",
     "download_pdf": "Descargar PDF",
     "save": "Guardar",
     "cancel": "Cancelar",
@@ -796,7 +798,7 @@
       "running_migrations": "Ejecutar migraciones",
       "finishing_update": "Actualización final",
       "update_failed": "Actualización fallida",
-      "update_failed_text": "¡Lo siento! Su actualización falló el: {step} paso" 
+      "update_failed_text": "¡Lo siento! Su actualización falló el: {step} paso"
     }
   },
   "wizard": {

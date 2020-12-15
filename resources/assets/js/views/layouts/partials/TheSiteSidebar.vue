@@ -81,6 +81,19 @@ export default {
             icon: 'cog',
             route: '/admin/settings'
           }
+        ],
+
+        [
+          {
+            title: 'navigation.roles',
+            icon: 'signal',
+            route: '/admin/roles'
+          },
+          {
+            title: 'navigation.permissions',
+            icon: 'cog',
+            route: '/admin/permissions'
+          }
         ]
 
       ]
