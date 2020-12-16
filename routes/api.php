@@ -194,8 +194,27 @@ Route::group(['middleware' => 'api'], function () {
             'as' => 'roles.delete',
             'uses' => 'RolesController@delete'
         ]);
+        Route::get('/roles/permissions/{id}', [
+            'as' => 'roles.permissions',
+            'uses' => 'RolesController@getRolePermissions'
+        ]);
+        Route::put('/roles/permissions/{id}', [
+            'as' => 'roles.permissions',
+            'uses' => 'RolesController@updateRolePermission'
+        ]);
+
 
         Route::resource('roles', 'RolesController');
+
+        // Permissions
+        //----------------------------------
+
+        Route::post('/permission/delete', [
+            'as' => 'permission.delete',
+            'uses' => 'PermissionController@delete'
+        ]);
+
+        Route::resource('permission', 'PermissionController');
 
 
         // Roles
