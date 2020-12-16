@@ -70,7 +70,7 @@
                 <div>
                   <ul>
                     <li>
-                      <input v-model="formData.removelines" :value="1"  v-validate="{ required: this.isY }"  type="radio" id="f-option" name="selector">
+                      <input v-model="formData.removelines" :value="1"  :required="this.isY ? true : false"  type="radio" id="f-option" name="selector">
                       <label for="f-option">Company With Personal Liabaility</label>
                       
                       <div class="check"></div>
@@ -445,6 +445,7 @@ export default {
       buttonValue:null,
       isP:false,
       isB:false,
+      isY:true,
       isCopyFromBilling: false,
       isLoading: false,
       formData: {
@@ -595,6 +596,7 @@ export default {
       this.buttonValue = 1;
       this.isP = true;
       this.isB = false;
+      this.isY = false;
     },
     hideForm(){
       this.isBusiness = true;
@@ -602,6 +604,7 @@ export default {
       this.buttonValue = 2;
       this.isP = false;
       this.isB = true;
+      this.isY = true;
     },
     currencyNameWithCode ({name, code}) {
       return `${code} - ${name}`
