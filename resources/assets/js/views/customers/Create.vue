@@ -35,8 +35,8 @@
             <div class="col-sm-12">
               <div class="form-group">
                 <div>
-                  <button @click="showForm" :class="{ 'active':  isP  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="private_btn">Private customer</button>
-                  <button @click="hideForm" :class="{ 'active':  isB  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="business_btn">Business customer</button>
+                  <button @click="showForm"  :class="{ 'active':  isP  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="private_btn">Private customer</button>
+                  <button @click="hideForm"  :class="{ 'active':  isB  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="business_btn">Business customer</button>
                 </div>
                 <!-- <label class="form-label">{{ $t('customers.display_name') }}</label><span class="text-danger"> *</span> -->
                 <!-- <base-input
@@ -588,6 +588,8 @@ export default {
     } else {
       this.currency = this.defaultCurrency
     }
+
+    
   },
   methods: {
     showForm(){
@@ -624,7 +626,7 @@ export default {
       this.formData.phone = customer.phone
       this.formData.currency_id = customer.currency_id
       this.formData.website = customer.website
-      this.formData.removelines = customer.removelines
+      this.formData.removelines = customer.company_type_id
 
       this.buttonValue = customer.customer_type_id
 
@@ -647,6 +649,12 @@ export default {
       this.currencyList = currencies
       this.formData.currency_id = customer.currency_id
       this.currency = currency
+
+      if(this.buttonValue == 1){
+        this.showForm()
+      }else if(this.buttonValue == 2){
+        this.hideForm()
+      }
     },
     async fetchCountry () {
       let res = await window.axios.get('/api/countries')
