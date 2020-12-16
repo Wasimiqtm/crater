@@ -80,6 +80,10 @@ import ExpenseCategory from './views/settings/ExpenseCategory.vue'
 import MailConfig from './views/settings/MailConfig.vue'
 import UpdateApp from './views/settings/UpdateApp.vue'
 
+// Language
+import Language from './views/language/Index.vue'
+
+
 import Wizard from './views/wizard/Index.vue'
 
 Vue.use(VueRouter)
@@ -377,6 +381,23 @@ const routes = [
         name: 'roles.edit',
         component: RoleCreate
       },
+
+
+      // Langauge
+      {
+        path: 'language',
+        component: Language
+      },
+      // {
+      //   path: 'roles/create',
+      //   name: 'roles.create',
+      //   component: RoleCreate
+      // },
+      // {
+      //   path: 'roles/:id/edit',
+      //   name: 'roles.edit',
+      //   component: RoleCreate
+      // },
     ]
   },
 
