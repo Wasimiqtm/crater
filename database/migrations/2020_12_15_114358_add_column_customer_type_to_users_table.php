@@ -15,6 +15,7 @@ class AddColumnCustomerTypeToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->bigInteger('customer_type_id')->after('role')->nullable();
+            $table->bigInteger('company_type_id')->after('customer_type_id')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class AddColumnCustomerTypeToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('customer_type');
+            $table->dropColumn('company_type');
         });
     }
 }

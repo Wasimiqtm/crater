@@ -59,10 +59,11 @@ class CustomersController extends Controller
     {
         $verifyEmail = User::where('email', $request->email)->first();
 
-
+        //dd($request->all());
         $customer = new User();
         $customer->name = $request->name;
         $customer->customer_type_id = $request->customer_type_id;
+        $customer->company_type_id = $request->removelines;
         $customer->currency_id = $request->currency_id;
         $customer->company_id = $request->header('company');
         $customer->email = $request->email;
