@@ -37,6 +37,11 @@ import CustomerCreate from './views/customers/Create.vue'
 // Roles
 import RoleIndex from './views/roles/Index.vue'
 import RoleCreate from './views/roles/Create.vue'
+import AssignPermission from './views/roles/Assign.vue'
+
+// Permissions
+import PermissionIndex from './views/permissions/Index.vue'
+import PermissionCreate from './views/permissions/Create.vue'
 
 // Items
 import ItemsIndex from './views/items/Index.vue'
@@ -81,6 +86,7 @@ import MailConfig from './views/settings/MailConfig.vue'
 import UpdateApp from './views/settings/UpdateApp.vue'
 
 import Wizard from './views/wizard/Index.vue'
+import Permission from "./views/wizard/Permission";
 
 Vue.use(VueRouter)
 
@@ -376,6 +382,26 @@ const routes = [
         path: 'roles/:id/edit',
         name: 'roles.edit',
         component: RoleCreate
+      },
+      // Permissions
+      {
+        path: 'permissions',
+        component: PermissionIndex
+      },
+      {
+        path: 'permissions/create',
+        name: 'permissions.create',
+        component: PermissionCreate
+      },
+      {
+        path: 'permissions/:id/edit',
+        name: 'permissions.edit',
+        component: PermissionCreate
+      },
+      {
+        path: 'roles/permissions/:id',
+        name: 'permissions.assign',
+        component: AssignPermission
       },
     ]
   },

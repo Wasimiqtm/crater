@@ -33,44 +33,19 @@ class RolesController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request){
-
-        /*if($request->ajax()){
-            $roles = Role::get();
-
-            return Datatables::of($roles)
-                ->addColumn('action', function ($role) {
-                    $action = '';
-                    if(Auth::user()->can('view role permission'))
-                        $action .= '<a href="roles/permissions/'. Hashids::encode($role->id).'" class="text-primary" data-toggle="tooltip" title="Change Permission"><i class="fa fa-lg fa-key"></i> </a>';
-                    if(Auth::user()->can('edit roles'))
-                        $action .= '<a href="roles/'. Hashids::encode($role->id).'/edit" class="text-primary" data-toggle="tooltip" title="Edit Role"><i class="fa fa-lg fa-edit"></i> </a>';
-                    if(Auth::user()->can('delete roles'))
-                        $action .= '<a href="roles/'.Hashids::encode($role->id).'" class="text-danger btn-delete" data-toggle="tooltip" title="Delete Role"><i class="fa fa-lg fa-trash"></i></a>';
-
-                    return $action;
-                })
-                ->editColumn('id', 'ID: {{$id}}')
-                ->make(true);
-        }
-        return view('admin.roles.index');*/
-
+    public function index(Request $request)
+    {
         $limit = $request->has('limit') ? $request->limit : 10;
-
-        $roles = Role::/*applyFilters($request->only([
-                'search',
-                'contact_name',
-                'orderByField',
-                'orderBy'
-            ]))
-
-            ->*/paginate($limit);
+        $roles = Role::query();
+            $roles = $roles->where('name', 'LIKE', "%{$request->name}%")
+            ->paginate($limit);
 
         $siteData = [
             'roles' => $roles
         ];
 
         return response()->json($siteData);
+
     }
 
     /**
@@ -78,10 +53,8 @@ class RolesController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-
-        return view('admin.roles.create');
-
+    public function create()
+    {
     }
 
     /**
@@ -90,19 +63,17 @@ class RolesController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
-        $this->validate($request,[
-            'name' => 'required|unique:roles,name',
+    public function store(Request $request)
+    {
+        $role = new Role();
+        $role->name = $request->name;
+        $role->save();
+        $role = Role::find($role->id);
+
+        return response()->json([
+            'role' => $role,
+            'success' => true
         ]);
-
-        $requestData = $request->all();
-        $requestData['guard_name'] = 'admin';
-
-        Role::create($requestData);
-
-        Session::flash('success', 'Role added!');
-
-        return redirect('admin/roles');
     }
 
     /**
@@ -124,12 +95,11 @@ class RolesController extends Controller{
      */
     public function edit($id)
     {
-
-        $id = decodeId($id);
-
         $role = Role::findOrFail($id);
 
-        return view('admin.roles.edit',compact('role'));
+        return response()->json([
+            'role' => $role
+        ]);
     }
 
     /**
@@ -141,22 +111,17 @@ class RolesController extends Controller{
      */
     public function update($id, Request $request)
     {
+        $role = Role::find($id);
+        $role->name = $request->name;
+        //$role->guard_name = 'admin';
+        $role->save();
 
-        $id = decodeId($id);
+        $role = Role::find($role->id);
 
-        $this->validate($request, [
-            'name' => 'required|unique:roles,name,'.$id,
+        return response()->json([
+            'role' => $role,
+            'success' => true
         ]);
-
-        $requestData = $request->all();
-
-        $role = Role::findOrFail($id);
-
-        $role->update($requestData);
-
-        Session::flash('success', 'Role updated!');
-
-        return redirect('admin/roles');
     }
 
     /**
@@ -167,21 +132,33 @@ class RolesController extends Controller{
      */
     public function destroy($id)
     {
-        $id = Hashids::decode($id)[0];
-
         $role = Role::find($id);
-
         if($role){
             $role->delete();
-            $response['message'] = 'Role deleted!';
-            $status = $this->successStatus;
-        }else{
-            $response['message'] = 'Role not exist against this id!';
-            $status = $this->errorStatus;
+            return response()->json([
+                'success' => true
+            ]);
+        }
+    }
+
+    /**
+     * Remove the selected resources from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request)
+    {
+        foreach ($request->id as $id) {
+            $role = Role::find($id);
+            if($role){
+                $role->delete();
+            }
         }
 
-        return response()->json(['result'=>$response], $status);
-
+        return response()->json([
+            'success' => true
+        ]);
     }
 
 
@@ -192,33 +169,35 @@ class RolesController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function getRolePermissions($role_id){
-
-        $id = decodeId($role_id);
-
+    public function getRolePermissions($id)
+    {
         $role = Role::find($id);
-
         $permissions = Permission::all();
 
-        return view('admin.roles.permissions',compact('role','permissions'));
+        $permissionss = $permissions->map(function ($item) use ($role) {
+            $item->assigned = $role->hasPermissionTo($item->name);
+            return $item;
+        });
+
+        $data = [
+            'role' => $role,
+            'permissions' => $permissionss
+        ];
+
+        return response()->json($data);
     }
 
 
-    public function updateRolePermission($role_id, Request $request){
-
-        $id = decodeId($role_id);
-
-        $permissions = $request->permissions;
-
-        $role = Role::findById($id);
+    public function updateRolePermission($id, Request $request)
+    {
+        $role = Role::find($id);
+        $assigned_permissions = $request->assigned_permissions;
 
         DB::table('role_has_permissions')->where('role_id', $id)->delete();
+        $role->syncPermissions($assigned_permissions);
 
-        $role->syncPermissions($permissions);
-
-        Session::flash('success', 'Permission updated!');
-
-        return redirect('admin/roles');
-
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

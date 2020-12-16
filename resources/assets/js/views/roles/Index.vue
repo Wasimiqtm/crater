@@ -32,12 +32,12 @@
             {{ $t('general.filter') }}
           </base-button>
         </div>
-        <router-link slot="item-title" class="col-xs-2" to="customers/create">
+        <router-link slot="item-title" class="col-xs-2" to="roles/create">
           <base-button
             size="large"
             icon="plus"
             color="theme">
-            {{ $t('customers.new_customer') }}
+            {{ $t('roles.new_role') }}
           </base-button>
         </router-link>
       </div>
@@ -63,10 +63,10 @@
     <div v-cloak v-show="showEmptyScreen" class="col-xs-1 no-data-info" align="center">
       <astronaut-icon class="mt-5 mb-4"/>
       <div class="row" align="center">
-        <label class="col title">{{ $t('customers.no_customers') }}</label>
+        <label class="col title">{{ $t('roles.no_roles') }}</label>
       </div>
       <div class="row">
-        <label class="description col mt-1" align="center">{{ $t('customers.list_of_customers') }}</label>
+        <label class="description col mt-1" align="center">{{ $t('roles.list_of_roles') }}</label>
       </div>
       <div class="btn-container">
         <base-button
@@ -74,9 +74,9 @@
           color="theme"
           class="mt-3"
           size="large"
-          @click="$router.push('customers/create')"
+          @click="$router.push('roles/create')"
         >
-          {{ $t('customers.add_new_customer') }}
+          {{ $t('roles.add_new_role') }}
         </base-button>
       </div>
     </div>
@@ -145,7 +145,7 @@
         <table-column
           :label="$t('roles.added_on')"
           sort-as="created_at"
-          show="formattedCreatedAt"
+          show="created_at"
         />
         <table-column
           :sortable="false"
@@ -158,6 +158,14 @@
               <a slot="activator" href="#">
                 <dot-icon />
               </a>
+              <v-dropdown-item>
+
+                <router-link :to="{path: `roles/permissions/${row.id}`}" class="dropdown-item">
+                  <font-awesome-icon :icon="['fas', 'space-shuttle']" class="dropdown-item-icon"/>
+                  {{ $t('permissions.assign_permission') }}
+                </router-link>
+
+              </v-dropdown-item>
               <v-dropdown-item>
 
                 <router-link :to="{path: `roles/${row.id}/edit`}" class="dropdown-item">
