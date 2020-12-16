@@ -218,7 +218,6 @@
     "updated_message": "Role updated successfully",
     "deleted_message": "Role deleted successfully | Roles deleted successfully"
     },
-<<<<<<< HEAD
     "permissions": {
         "title": "Permissions",
         "assign_permission": "Assign Permissions",
@@ -265,8 +264,6 @@
         "updated_message": "Permission updated successfully",
         "deleted_message": "Permission deleted successfully | Permission deleted successfully"
     },
-=======
-
     "language": {
       "title": "Langauge",
       "add_language": "Add Langauge",
@@ -306,13 +303,12 @@
       "select_currency": "Select currency",
       "select_a_role": "Select a Role",
       "type_or_click": "Type or click to select",
-  
+
       "confirm_delete": "You will not be able to recover this Role and all the related Invoices, Estimates and Payments. | You will not be able to recover these customers and all the related Invoices, Estimates and Payments.",
       "created_message": "Role created successfully",
       "updated_message": "Role updated successfully",
       "deleted_message": "Role deleted successfully | Roles deleted successfully"
       },
->>>>>>> 7d584662541ab296df7aeed4e0ae4b5483e1264d
   "items": {
     "title": "Items",
     "items_list": "Items List",

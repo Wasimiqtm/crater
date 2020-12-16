@@ -387,7 +387,6 @@ const routes = [
         name: 'roles.edit',
         component: RoleCreate
       },
-<<<<<<< HEAD
       // Permissions
       {
         path: 'permissions',
@@ -408,25 +407,12 @@ const routes = [
         name: 'permissions.assign',
         component: AssignPermission
       },
-=======
-
 
       // Langauge
       {
         path: 'language',
         component: Language
       },
-      // {
-      //   path: 'roles/create',
-      //   name: 'roles.create',
-      //   component: RoleCreate
-      // },
-      // {
-      //   path: 'roles/:id/edit',
-      //   name: 'roles.edit',
-      //   component: RoleCreate
-      // },
->>>>>>> 7d584662541ab296df7aeed4e0ae4b5483e1264d
     ]
   },
 
