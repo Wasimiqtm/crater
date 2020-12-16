@@ -85,6 +85,10 @@ import ExpenseCategory from './views/settings/ExpenseCategory.vue'
 import MailConfig from './views/settings/MailConfig.vue'
 import UpdateApp from './views/settings/UpdateApp.vue'
 
+// Language
+import Language from './views/language/Index.vue'
+
+
 import Wizard from './views/wizard/Index.vue'
 import Permission from "./views/wizard/Permission";
 
@@ -383,6 +387,7 @@ const routes = [
         name: 'roles.edit',
         component: RoleCreate
       },
+<<<<<<< HEAD
       // Permissions
       {
         path: 'permissions',
@@ -403,6 +408,25 @@ const routes = [
         name: 'permissions.assign',
         component: AssignPermission
       },
+=======
+
+
+      // Langauge
+      {
+        path: 'language',
+        component: Language
+      },
+      // {
+      //   path: 'roles/create',
+      //   name: 'roles.create',
+      //   component: RoleCreate
+      // },
+      // {
+      //   path: 'roles/:id/edit',
+      //   name: 'roles.edit',
+      //   component: RoleCreate
+      // },
+>>>>>>> 7d584662541ab296df7aeed4e0ae4b5483e1264d
     ]
   },
 

@@ -80,6 +80,11 @@ export default {
             title: 'navigation.settings',
             icon: 'cog',
             route: '/admin/settings'
+          },
+          {
+            title: 'navigation.language',
+            icon: 'star',
+            route: '/admin/language'
           }
         ],
 

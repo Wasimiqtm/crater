@@ -59,9 +59,11 @@ class CustomersController extends Controller
     {
         $verifyEmail = User::where('email', $request->email)->first();
 
-
+        //dd($request->all());
         $customer = new User();
         $customer->name = $request->name;
+        $customer->customer_type_id = $request->customer_type_id;
+        $customer->company_type_id = $request->removelines;
         $customer->currency_id = $request->currency_id;
         $customer->company_id = $request->header('company');
         $customer->email = $request->email;
@@ -131,7 +133,7 @@ class CustomersController extends Controller
         $customer = User::with('billingAddress', 'shippingAddress')->findOrFail($id);
         $currency = $customer->currency;
         $currencies = Currency::all();
-
+        // dd($customer);
         return response()->json([
             'customer' => $customer,
             'currencies' => $currencies,
@@ -168,6 +170,8 @@ class CustomersController extends Controller
         }
 
         $customer->name = $request->name;
+        $customer->customer_type_id = $request->customer_type_id;
+        $customer->company_type_id = $request->removelines;
         $customer->currency_id = $request->currency_id;
         $customer->email = $request->email;
         $customer->phone = $request->phone;
