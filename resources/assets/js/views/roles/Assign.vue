@@ -40,8 +40,18 @@
         </div>
 
       </div>
-      <div class="form-group">
-        <button class="btn btn-info">Submit</button>
+      <div class="row  mb-4">
+        <div class="col-md-12 input-group">
+          <base-button
+            :loading="isLoading"
+            :disabled="isLoading"
+            icon="save"
+            color="theme"
+            type="submit"
+          >
+            {{ $tc('settings.account_settings.save') }}
+          </base-button>
+        </div>
       </div>
     </form>
   </div>

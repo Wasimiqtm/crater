@@ -43,6 +43,10 @@ import AssignPermission from './views/roles/Assign.vue'
 import PermissionIndex from './views/permissions/Index.vue'
 import PermissionCreate from './views/permissions/Create.vue'
 
+// SubAdmins
+import SubAdminIndex from './views/subadmins/Index.vue'
+import SubAdminCreate from './views/subadmins/Create.vue'
+
 // Items
 import ItemsIndex from './views/items/Index.vue'
 import ItemCreate from './views/items/Create.vue'
@@ -406,6 +410,21 @@ const routes = [
         path: 'roles/permissions/:id',
         name: 'permissions.assign',
         component: AssignPermission
+      },
+      // Subadmins
+      {
+        path: 'subadmins',
+        component: SubAdminIndex
+      },
+      {
+        path: 'subadmins/create',
+        name: 'subadmins.create',
+        component: SubAdminCreate
+      },
+      {
+        path: 'subadmins/:id/edit',
+        name: 'subadmins.edit',
+        component: SubAdminCreate
       },
 
       // Langauge

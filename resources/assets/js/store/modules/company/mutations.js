@@ -7,7 +7,7 @@ export default {
     state.selectedCompany = companies[0]
   },
   [types.SET_SELECTED_COMPANY] (state, company) {
-    Ls.set('selectedCompany', company.id)
+    //Ls.set('selectedCompany', company.id)
     state.selectedCompany = company
   }
 }

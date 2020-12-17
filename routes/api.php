@@ -216,6 +216,16 @@ Route::group(['middleware' => 'api'], function () {
 
         Route::resource('permission', 'PermissionController');
 
+        // Sub Admins
+        //----------------------------------
+
+        Route::post('/subAdmins/delete', [
+            'as' => 'subAdmins.delete',
+            'uses' => 'SubAdminsController@delete'
+        ]);
+
+        Route::resource('subAdmins', 'SubAdminsController');
+
 
         // Items
         //----------------------------------

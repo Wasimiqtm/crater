@@ -26,7 +26,8 @@ class CompanyController extends Controller
      */
     public function getAdmin()
     {
-        return User::find(1);
+//        return User::find(1);
+        return User::find(request()->user()->id);
     }
 
     /**
@@ -75,7 +76,8 @@ class CompanyController extends Controller
      */
     public function getAdminCompany()
     {
-        $user = User::with(['addresses', 'addresses.country', 'company'])->find(1);
+//        $user = User::with(['addresses', 'addresses.country', 'company'])->find(1);
+        $user = User::with(['addresses', 'addresses.country', 'company'])->find(request()->user()->id);
 
         return response()->json([
             'user' => $user
@@ -91,7 +93,8 @@ class CompanyController extends Controller
      */
     public function updateAdminCompany(CompanyRequest $request)
     {
-        $user = User::find(1);
+//        $user = User::find(1);
+        $user = User::find(request()->user()->id);
         $company = $user->company;
         $company->name = $request->name;
         $company->save();
@@ -103,7 +106,8 @@ class CompanyController extends Controller
 
         $fields = $request->only(['address_street_1', 'address_street_2', 'city', 'state', 'country_id', 'zip', 'phone']);
         $address = Address::updateOrCreate(['user_id' => 1], $fields);
-        $user = User::with(['addresses', 'addresses.country', 'company'])->find(1);
+//        $user = User::with(['addresses', 'addresses.country', 'company'])->find(1);
+        $user = User::with(['addresses', 'addresses.country', 'company'])->find(request()->user()->id);
 
         return response()->json([
             'user' => $user,

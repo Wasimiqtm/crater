@@ -99,8 +99,15 @@ export default {
             icon: 'cog',
             route: '/admin/permissions'
           }
-        ]
+        ],
 
+        [
+          {
+            title: 'navigation.subAdmins',
+            icon: 'user',
+            route: '/admin/subAdmins'
+          }
+        ]
       ]
     }
   },
