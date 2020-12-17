@@ -227,6 +227,17 @@ Route::group(['middleware' => 'api'], function () {
         Route::resource('subAdmins', 'SubAdminsController');
 
 
+        // Roles
+        //----------------------------------
+
+        Route::post('/language/delete', [
+            'as' => 'language.delete',
+            'uses' => 'LanguageController@delete'
+        ]);
+
+        Route::resource('language', 'LanguageController');
+
+
         // Items
         //----------------------------------
 
