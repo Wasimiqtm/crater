@@ -3,8 +3,8 @@ import * as types from './mutation-types'
 export const fetchLanguage = ({ commit, dispatch, state }) => {
   return new Promise((resolve, reject) => {
     window.axios.get(`/api/language`).then((response) => {
-      commit(types.BOOTSTRAP_LANGUAGE, response.data.language.data)
-      commit(types.SET_TOTAL_LANGUAGE, response.data.language.total)
+      // commit(types.BOOTSTRAP_LANGUAGE, response.data.language.data)
+      // commit(types.SET_TOTAL_LANGUAGE, response.data.language.total)
       resolve(response)
     }).catch((err) => {
       reject(err)

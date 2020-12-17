@@ -84,6 +84,9 @@ export default {
     // refreshTable () {
     //   this.$refs.table.refresh()
     // },
+
+
+ 
     async fetchData () {
         
       this.isRequestOngoing = true
@@ -94,23 +97,28 @@ export default {
     //   let listOfObjects = Object.keys(response.data).map((key) => {
     //   return response.data[key]
     //     })
-        // console.log(response.data);
+        console.log(this.language);
+        // var myObj = { a: 1, b: 2, c: 3, d: 4 },
+        var myArray = Object.keys(this.language).map(v => new Array(v, this.language[v]));
 
-        var result = Object.keys(response.data).map(function(key) {
-            return [String(key), response.data[key]];
-            });
-        console.log(result);
+        
+        console.log(myArray);
 
-            for (let index = 0; index < result.length; index++) {
+        // var result = Object.keys(response.data).map(function(key) {
+        //     return [String(key), response.data[key]];
+        //     });
+        // console.log(result);
 
-                for (let index1 = 0; index1 < result[index].length; index1++) {
-                    // const element = array[index];
-                    console.log(result[index][index1]);
+        //     for (let index = 0; index < result.length; index++) {
+
+        //         for (let index1 = 0; index1 < result[index].length; index1++) {
+        //             // const element = array[index];
+        //             console.log(result[index][index1]);
                     
-                }
-                // console.log(result[index]);
+        //         }
+        //         // console.log(result[index]);
                 
-            }
+        //     }
 
             // console.log(result);
     //   return {

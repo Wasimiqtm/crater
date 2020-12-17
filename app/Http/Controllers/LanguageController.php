@@ -44,41 +44,12 @@ class LanguageController extends Controller{
         
             $jsonString = file_get_contents(base_path('resources/assets/js/plugins/en.json'));
         
-            $data = json_decode($jsonString, true);
+            $data = json_decode($jsonString, TRUE);
         
             // dd($data);
 
             return $data;
-        
-            // Update Key
-        
-            $data['country.title'] = "Change Manage Country";
-        
-        
-        
-            // Write File
-        
-            $newJsonString = json_encode($data, JSON_PRETTY_PRINT);
-        
-            file_put_contents(base_path('resources/lang/en.json'), stripslashes($newJsonString));
-        
-        
-        
-            // Get Key Value
-        
-            dd(__('country.title'));
-        
-        
-
-        // $limit = $request->has('limit') ? $request->limit : 10;
-
-        // $roles = Language::paginate($limit);
-
-        // $siteData = [
-        //     'roles' => $roles
-        // ];
-
-        // return response()->json($siteData);
+    
     }
 
     /**
