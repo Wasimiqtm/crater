@@ -105,7 +105,7 @@ class CompanyController extends Controller
         }
 
         $fields = $request->only(['address_street_1', 'address_street_2', 'city', 'state', 'country_id', 'zip', 'phone']);
-        $address = Address::updateOrCreate(['user_id' => 1], $fields);
+        $address = Address::updateOrCreate(['user_id' => request()->user()->id], $fields);
 //        $user = User::with(['addresses', 'addresses.country', 'company'])->find(1);
         $user = User::with(['addresses', 'addresses.country', 'company'])->find(request()->user()->id);
 

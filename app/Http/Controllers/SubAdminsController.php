@@ -67,7 +67,6 @@ class SubAdminsController extends Controller
         $customer->company_type_id = $request->removelines;
         $customer->currency_id = $request->currency_id;
         $customer->email = $request->email;
-        $customer->password = bcrypt($request->password);
         $customer->phone = $request->phone;
         $customer->company_name = $request->company_name;
         $customer->contact_name = $request->contact_name;
@@ -322,10 +321,15 @@ class SubAdminsController extends Controller
             }
         }
 
-        $customer = User::with('billingAddress', 'shippingAddress')->find($customer->id);
+        /*update user company info*/
+        $company = $customer->company;
+        $company->name = $request->company_name;
+        $company->save();
+
+        $customer = User::with('billingAddress')->find($customer->id);
 
         return response()->json([
-            'customer' => $customer,
+            'subAdmin' => $customer,
             'success' => true
         ]);
     }
@@ -338,6 +342,10 @@ class SubAdminsController extends Controller
      */
     public function destroy($id)
     {
+        /*delete company settings first due to integrity constraint or you can use casecade on database side*/
+        CompanySetting::where('company_id', User::find($id)->company_id)->delete();
+
+        /*delete user along with company*/
         User::deleteCustomer($id);
 
         return response()->json([
