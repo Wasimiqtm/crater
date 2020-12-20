@@ -37,18 +37,16 @@ class LanguageController extends Controller{
     public function index(Request $request){
 
         
+        $limit = $request->has('limit') ? $request->limit : 10;
+        $roles = Language::query();
+            $roles = $roles->where('en', 'LIKE', "%{$request->name}%")
+            ->paginate($limit);
 
+        $siteData = [
+            'roles' => $roles
+        ];
 
-
-            // Read File
-        
-            $jsonString = file_get_contents(base_path('resources/assets/js/plugins/en.json'));
-        
-            $data = json_decode($jsonString, TRUE);
-        
-            // dd($data);
-
-            return $data;
+        return response()->json($siteData);
     
     }
 
