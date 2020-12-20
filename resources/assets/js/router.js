@@ -91,6 +91,7 @@ import UpdateApp from './views/settings/UpdateApp.vue'
 
 // Language
 import Language from './views/language/Index.vue'
+import LanguageCreate from './views/language/Create.vue'
 
 
 import Wizard from './views/wizard/Index.vue'
@@ -431,6 +432,11 @@ const routes = [
       {
         path: 'language',
         component: Language
+      },
+      {
+        path: 'language/:id/edit',
+        name: 'language.edit',
+        component: LanguageCreate
       },
     ]
   },

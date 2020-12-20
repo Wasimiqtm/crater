@@ -3,10 +3,10 @@ import * as actions from './actions'
 import * as getters from './getters'
 
 const initialState = {
-  language: [],
-  totalLanguage: 0,
+  roles: [],
+  totalRoles: 0,
   selectAllField: false,
-  selectedLanguage: []
+  selectedRoles: []
 }
 
 export default {
