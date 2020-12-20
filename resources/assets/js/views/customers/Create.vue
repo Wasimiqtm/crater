@@ -32,7 +32,7 @@
         <div class="card-body">
           <div class="row">
             <div class="text-center section-title col-sm-12">{{ $t('customers.customer_type') }}</div>
-            <div class="col-sm-12">
+            <div class="col-sm-5">
               <div class="form-group">
                 <div class="center">
                   <button style="height:50px; width=200px;" @click="showForm"  :class="{ 'active':  isP  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="private_btn">Private customer</button>
