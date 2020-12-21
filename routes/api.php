@@ -11,7 +11,6 @@
 |
 */
 
-
 // Authentication & Password Reset
 //----------------------------------
 
@@ -227,13 +226,18 @@ Route::group(['middleware' => 'api'], function () {
         Route::resource('subAdmins', 'SubAdminsController');
 
 
-        // Roles
+        // Language
         //----------------------------------
 
         Route::post('/language/delete', [
             'as' => 'language.delete',
             'uses' => 'LanguageController@delete'
         ]);
+
+        //Add to database function
+
+        Route::get('/language/enterDatabase','LanguageController@add_to_database');
+
 
         Route::resource('language', 'LanguageController');
 

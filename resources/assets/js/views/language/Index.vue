@@ -1,7 +1,7 @@
 <template>
   <div class="customer-create main-content">
     <div class="page-header">
-      <h3 class="page-title">{{ $t('roles.title') }}</h3>
+      <h3 class="page-title">{{ $t('language.title') }}</h3>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <router-link
@@ -14,7 +14,7 @@
           <router-link
             slot="item-title"
             to="#">
-            {{ $tc('roles.role',2) }}
+            {{ $tc('language.title',2) }}
           </router-link>
         </li>
       </ol>
@@ -32,14 +32,14 @@
             {{ $t('general.filter') }}
           </base-button>
         </div>
-        <router-link slot="item-title" class="col-xs-2" to="roles/create">
+        <!-- <router-link slot="item-title" class="col-xs-2" to="roles/create">
           <base-button
             size="large"
             icon="plus"
             color="theme">
-            {{ $t('roles.new_role') }}
+            {{ $t('language.add_new_language') }}
           </base-button>
-        </router-link>
+        </router-link> -->
       </div>
     </div>
 
@@ -47,11 +47,29 @@
       <div v-show="showFilters" class="filter-section">
         <div class="row">
           <div class="col-sm-4">
-            <label class="form-label">{{ $t('roles.display_name') }}</label>
+            <label class="form-label">{{ $t('language.module') }}</label>
             <base-input
-              v-model="filters.name"
+              v-model="filters.parent"
               type="text"
-              name="name"
+              name="parent"
+              autocomplete="off"
+            />
+          </div>
+           <div class="col-sm-4">
+            <label class="form-label">{{ $t('language.english') }}</label>
+            <base-input
+              v-model="filters.value_en"
+              type="text"
+              name="english"
+              autocomplete="off"
+            />
+           </div>
+            <div class="col-sm-4">
+            <label class="form-label">{{ $t('language.denmark') }}</label>
+            <base-input
+              v-model="filters.value_da"
+              type="text"
+              name="danish"
               autocomplete="off"
             />
           </div>
@@ -61,7 +79,7 @@
     </transition>
 
     <div v-cloak v-show="showEmptyScreen" class="col-xs-1 no-data-info" align="center">
-      <astronaut-icon class="mt-5 mb-4"/>
+      <!-- <astronaut-icon class="mt-5 mb-4"/> -->
       <div class="row" align="center">
         <label class="col title">{{ $t('roles.no_roles') }}</label>
       </div>
@@ -137,16 +155,21 @@
             </div>
           </template>
         </table-column>
+
         <table-column
-          :label="$t('roles.name')"
-          show="en"
+          :label="$t('language.module')"
+          show="parent"
         />
 
         <table-column
-          :label="$t('roles.added_on')"
-          sort-as="created_at"
-          show="created_at"
+          :label="$t('language.english')"
+          show="value_en"
         />
+         <table-column
+          :label="$t('language.denmark')"
+          show="value_da"
+        />
+
         <table-column
           :sortable="false"
           :filterable="false"
@@ -174,12 +197,12 @@
                 </router-link>
 
               </v-dropdown-item>
-              <v-dropdown-item>
+              <!-- <v-dropdown-item>
                 <div class="dropdown-item" @click="removeRole(row.id)">
                   <font-awesome-icon :icon="['fas', 'trash']" class="dropdown-item-icon" />
                   {{ $t('general.delete') }}
                 </div>
-              </v-dropdown-item>
+              </v-dropdown-item> -->
             </v-dropdown>
           </template>
         </table-column>
@@ -206,7 +229,9 @@ export default {
       filtersApplied: false,
       isRequestOngoing: true,
       filters: {
-        name: ''
+        parent: '',
+        value_en: '',
+        value_da: ''
       }
     }
   },
@@ -251,6 +276,10 @@ export default {
       this.selectAllRoles()
     }
   },
+
+  mounted(){
+    // this.add_database()
+  },
   methods: {
     ...mapActions('language', [
       'fetchRoles',
@@ -258,14 +287,17 @@ export default {
       'selectRole',
       'deleteRole',
       'deleteMultipleRoles',
-      'setSelectAllState'
+      'setSelectAllState',
+      'add_to_database'
     ]),
     refreshTable () {
       this.$refs.table.refresh()
     },
     async fetchData ({ page, filter, sort }) {
       let data = {
-        name: this.filters.name,
+        parent: this.filters.parent,
+        value_en: this.filters.value_en,
+        value_da: this.filters.value_da,
         orderByField: sort.fieldName || 'created_at',
         orderBy: sort.order || 'desc',
         page
@@ -283,6 +315,16 @@ export default {
         }
       }
     },
+
+    async add_database () {
+     
+      this.isRequestOngoing = true
+      let response = await this.add_to_database()
+      this.isRequestOngoing = false
+      console.log(response)
+    },
+
+
     setFilters () {
       this.filtersApplied = true
       this.refreshTable()

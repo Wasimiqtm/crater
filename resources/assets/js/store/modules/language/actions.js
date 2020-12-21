@@ -95,3 +95,13 @@ export const selectRole = ({ commit, dispatch, state }, data) => {
 export const resetSelectedRole = ({ commit, dispatch, state }, data) => {
   commit(types.RESET_SELECTED_ROLE)
 }
+
+export const add_to_database = () => {
+  return new Promise((resolve, reject) => {
+    window.axios.get(`/api/language/enterDatabase`).then((response) => {
+      resolve(response)
+    }).catch((err) => {
+      reject(err)
+    })
+  })
+}

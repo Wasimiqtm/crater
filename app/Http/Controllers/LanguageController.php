@@ -47,7 +47,9 @@ class LanguageController extends Controller{
         
         $limit = $request->has('limit') ? $request->limit : 10;
         $roles = Language::query();
-            $roles = $roles->where('en', 'LIKE', "%{$request->name}%")
+            $roles = $roles->where('value_en', 'LIKE', "%{$request->value_en}%")
+            ->where('parent', 'LIKE', "%{$request->parent}%")
+            ->where('value_da', 'LIKE', "%{$request->value_da}%")
             ->paginate($limit);
 
         $siteData = [
@@ -58,13 +60,33 @@ class LanguageController extends Controller{
     
     }
 
-    // public function array_undot($dottedArray) {
-    //     $array = array();
-    //     foreach ($dottedArray as $key => $value) {
-    //       array_set($array, $key, $value);
-    //     }
-    //     return $array;
-    //   }
+   public function add_to_database(){
+    //    dd('entered');exit;
+    $jsonStringen = file_get_contents(base_path('resources/assets/js/plugins/en.json'));
+    $jsonStringda = file_get_contents(base_path('resources/assets/js/plugins/de.json'));
+    // print_r($jsonString);
+    $dataen = json_decode($jsonStringen, TRUE);
+    $datada = json_decode($jsonStringda, TRUE);
+
+   
+    $arrayen = array_dot($dataen);
+    $arrayda = array_dot($datada);
+   
+
+    foreach($arrayen as $key => $value)
+        {
+            $parent = explode(".",$key);
+
+        $container = new Language([
+            'parent' => $parent[0],
+            'key_value' => $key,
+            'value_en' => $value,
+            'value_da' => $arrayda[$key]
+        ]);
+
+        $container->save();
+        }
+   }
 
     /**
      * Show the form for creating a new resource.

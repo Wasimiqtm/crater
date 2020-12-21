@@ -48,34 +48,34 @@ export default {
         ],
 
         [
-          {
-            title: 'navigation.estimates',
-            icon: 'file',
-            route: '/admin/estimates'
-          },
-          {
-            title: 'navigation.invoices',
-            icon: 'file-alt',
-            route: '/admin/invoices'
-          },
-          {
-            title: 'navigation.payments',
-            icon: 'credit-card',
-            route: '/admin/payments'
-          },
-          {
-            title: 'navigation.expenses',
-            icon: 'space-shuttle',
-            route: '/admin/expenses'
-          }
+          // {
+          //   title: 'navigation.estimates',
+          //   icon: 'file',
+          //   route: '/admin/estimates'
+          // },
+          // {
+          //   title: 'navigation.invoices',
+          //   icon: 'file-alt',
+          //   route: '/admin/invoices'
+          // },
+          // {
+          //   title: 'navigation.payments',
+          //   icon: 'credit-card',
+          //   route: '/admin/payments'
+          // },
+          // {
+          //   title: 'navigation.expenses',
+          //   icon: 'space-shuttle',
+          //   route: '/admin/expenses'
+          // }
         ],
 
         [
-          {
-            title: 'navigation.reports',
-            icon: 'signal',
-            route: '/admin/reports'
-          },
+          // {
+          //   title: 'navigation.reports',
+          //   icon: 'signal',
+          //   route: '/admin/reports'
+          // },
           {
             title: 'navigation.settings',
             icon: 'cog',

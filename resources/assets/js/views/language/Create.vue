@@ -2,16 +2,16 @@
   <div class="customer-create main-content">
     <form action="" @submit.prevent="submitRoleData">
       <div class="page-header">
-        <h3 class="page-title">{{ isEdit ? $t('roles.edit_role') : $t('roles.new_role') }}</h3>
+        <h3 class="page-title">{{ isEdit ? $t('language.edit_language') : $t('roles.new_role') }}</h3>
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <router-link slot="item-title" to="/admin/dashboard">{{ $t('general.home') }}</router-link>
           </li>
           <li class="breadcrumb-item">
-            <router-link slot="item-title" to="/admin/roles">{{ $tc('roles.role', 2) }}</router-link>
+            <router-link slot="item-title" to="/admin/roles">{{ $tc('language.title', 2) }}</router-link>
           </li>
           <li class="breadcrumb-item">
-            {{ isEdit ? $t('roles.edit_role') : $t('roles.new_role') }}
+            {{ isEdit ? $t('language.edit_language') : $t('roles.new_role') }}
           </li>
         </ol>
         <div class="page-actions header-button-container">
@@ -23,17 +23,36 @@
             color="theme"
             type="submit"
           >
-            {{ isEdit ? $t('roles.update_role') : $t('roles.save_role') }}
+            {{ isEdit ? $t('language.update_language') : $t('roles.save_role') }}
           </base-button>
         </div>
       </div>
       <div class="customer-card card">
         <div class="card-body">
           <div class="row">
-            <div class="section-title col-sm-2">{{ $t('roles.basic_info') }}</div>
+            <div class="section-title col-sm-2">{{ $t('language.title') }}</div>
             <div class="col-sm-5">
               <div class="form-group">
-                <label class="form-label">{{ $t('roles.display_name') }}</label><span class="text-danger"> *</span>
+                <label class="form-label">{{ $t('language.english') }}</label><span class="text-danger"> *</span>
+                <base-input
+                  :invalid="$v.formData.name.$error"
+                  v-model="formData.name"
+                  focus
+                  type="text"
+                  name="en"
+                  tab-index="1"
+                  @input="$v.formData.name.$touch()"
+                />
+                <div v-if="$v.formData.name.$error">
+                  <span v-if="!$v.formData.name.required" class="text-danger">
+                    {{ $tc('validation.required') }}
+                  </span>
+                  <span v-if="!$v.formData.name.minLength" class="text-danger">
+                    {{ $tc('validation.name_min_length', $v.formData.name.$params.minLength.min, { count: $v.formData.name.$params.minLength.min }) }}
+                  </span>
+                </div>
+
+                <label class="form-label">{{ $t('language.denmark') }}</label><span class="text-danger"> *</span>
                 <base-input
                   :invalid="$v.formData.name.$error"
                   v-model="formData.name"
