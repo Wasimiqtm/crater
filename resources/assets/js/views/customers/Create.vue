@@ -34,9 +34,9 @@
             <div class="text-center section-title col-sm-12">{{ $t('customers.customer_type') }}</div>
             <div class="col-sm-12">
               <div class="form-group">
-                <div>
-                  <button @click="showForm"  :class="{ 'active':  isP  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="private_btn">Private customer</button>
-                  <button @click="hideForm"  :class="{ 'active':  isB  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="business_btn">Business customer</button>
+                <div class="center">
+                  <button style="height:50px; width=200px;" @click="showForm"  :class="{ 'active':  isP  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="private_btn">Private customer</button>
+                  <button style="height:50px; width=200px;" @click="hideForm"  :class="{ 'active':  isB  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="business_btn">Business customer</button>
                 </div>
                 <!-- <label class="form-label">{{ $t('customers.display_name') }}</label><span class="text-danger"> *</span> -->
                 <!-- <base-input
@@ -896,5 +896,11 @@ input[type=radio]:checked ~ label{
 	color: #AAAAAA;
 	text-decoration: none;
 	font-weight: bold;
+}
+.center {
+  margin: auto;
+ 
+  padding: 30px;
+  padding-left: 336px;;
 }
 </style>

@@ -12,6 +12,7 @@ import { mapActions, mapGetters } from 'vuex'
 import i18n from './plugins/i18n'
 import swal from 'sweetalert'
 
+
 require('./bootstrap')
 Vue.prototype.$utils = utils
 /**

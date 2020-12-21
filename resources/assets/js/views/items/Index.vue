@@ -315,7 +315,7 @@ export default {
       this.isRequestOngoing = true
       let response = await this.fetchItems(data)
       this.isRequestOngoing = false
-
+      console.log(response)
       return {
         data: response.data.items.data,
         pagination: {

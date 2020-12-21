@@ -16,6 +16,7 @@
   </div>
 </template>
 <script type="text/babel">
+// import Company from '../../store/modules/company'
 import SiteHeader from './partials/TheSiteHeader.vue'
 import SiteFooter from './partials/TheSiteFooter.vue'
 import SiteSidebar from './partials/TheSiteSidebar.vue'
@@ -43,17 +44,20 @@ export default {
     }),
 
     isShow () {
+      // console.log(this.selectedCompany.logo)
       return true
     }
   },
   mounted () {
     Layout.set('layout-default')
+    // console.log(this.selectedCompany)
   },
 
   created () {
     this.bootstrap().then((res) => {
       this.setInitialCompany()
     })
+    
   },
 
   methods: {

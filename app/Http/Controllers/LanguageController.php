@@ -29,6 +29,18 @@ class LanguageController extends Controller{
         $this->middleware('permission:edit role permission', ['only' => ['updateRolePermission']]);*/
     }
 
+    public function array_undot($dottedArray) {
+        // print_r(count($dottedArray));exit;
+        $array = array();
+        foreach ($dottedArray as $key => $value) {
+           
+          array_set($array, $key, $value);
+        }
+        // print_r($array);
+        // exit;
+        return $array;
+      }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,20 +49,48 @@ class LanguageController extends Controller{
     public function index(Request $request){
 
         
+        $limit = $request->has('limit') ? $request->limit : 10;
+        $roles = Language::query();
+            $roles = $roles->where('value_en', 'LIKE', "%{$request->value_en}%")
+            ->where('parent', 'LIKE', "%{$request->parent}%")
+            ->where('value_da', 'LIKE', "%{$request->value_da}%")
+            ->paginate($limit);
 
+        $siteData = [
+            'roles' => $roles
+        ];
 
-
-            // Read File
-        
-            $jsonString = file_get_contents(base_path('resources/assets/js/plugins/en.json'));
-        
-            $data = json_decode($jsonString, TRUE);
-        
-            // dd($data);
-
-            return $data;
+        return response()->json($siteData);
     
     }
+
+   public function add_to_database(){
+    //    dd('entered');exit;
+    $jsonStringen = file_get_contents(base_path('resources/assets/js/plugins/en.json'));
+    $jsonStringda = file_get_contents(base_path('resources/assets/js/plugins/de.json'));
+    // print_r($jsonString);
+    $dataen = json_decode($jsonStringen, TRUE);
+    $datada = json_decode($jsonStringda, TRUE);
+
+   
+    $arrayen = array_dot($dataen);
+    $arrayda = array_dot($datada);
+   
+
+    foreach($arrayen as $key => $value)
+        {
+            $parent = explode(".",$key);
+
+        $container = new Language([
+            'parent' => $parent[0],
+            'key_value' => $key,
+            'value_en' => $value,
+            'value_da' => $arrayda[$key]
+        ]);
+
+        $container->save();
+        }
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -104,11 +144,13 @@ class LanguageController extends Controller{
     public function edit($id)
     {
 
-        $id = decodeId($id);
+        // $id = decodeId($id);
 
-        $role = Role::findOrFail($id);
-
-        return view('admin.roles.edit',compact('role'));
+        $role = Language::findOrFail($id);
+        // dd($role);exit;
+        return response()->json([
+            'role' => $role
+        ]);
     }
 
     /**
@@ -121,21 +163,45 @@ class LanguageController extends Controller{
     public function update($id, Request $request)
     {
 
-        $id = decodeId($id);
-
         $this->validate($request, [
-            'name' => 'required|unique:roles,name,'.$id,
+            // 'name' => 'required|unique:roles,name,'.$id,
         ]);
 
         $requestData = $request->all();
-
-        $role = Role::findOrFail($id);
-
+        $role = Language::findOrFail($id);
         $role->update($requestData);
 
-        Session::flash('success', 'Role updated!');
+        //en.json file update
+        $arr = [];
+        $data1 = Language::select('key_value','value_en')->get();
+        foreach($data1 as $val)
+        {
+            $arr[$val['key_value']] = $val['value_en'];
+            
+        }
+        $data2 = $this->array_undot($arr);
+        $dataen = json_encode($data2,JSON_PRETTY_PRINT);
+      
+        file_put_contents(base_path('resources/assets/js/plugins/en.json'), stripslashes($dataen));
 
-        return redirect('admin/roles');
+        //de.json file update
+       
+        $arr = [];
+        $data1 = Language::select('key_value','value_da')->get();
+        foreach($data1 as $val)
+        {
+            $arr[$val['key_value']] = $val['value_da'];
+            
+        }
+        $data2 = $this->array_undot($arr);
+        $dataen = json_encode($data2,JSON_PRETTY_PRINT);
+      
+        file_put_contents(base_path('resources/assets/js/plugins/de.json'), stripslashes($dataen));
+
+        return response()->json([
+            'role' => $role,
+            'success' => true
+        ]);
     }
 
     /**
