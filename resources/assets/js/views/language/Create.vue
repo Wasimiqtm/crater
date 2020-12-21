@@ -35,39 +35,39 @@
               <div class="form-group">
                 <label class="form-label">{{ $t('language.english') }}</label><span class="text-danger"> *</span>
                 <base-input
-                  :invalid="$v.formData.name.$error"
-                  v-model="formData.name"
+                  :invalid="$v.formData.value_en.$error"
+                  v-model="formData.value_en"
                   focus
                   type="text"
-                  name="en"
+                  name="value_en"
                   tab-index="1"
-                  @input="$v.formData.name.$touch()"
+                  @input="$v.formData.value_en.$touch()"
                 />
-                <div v-if="$v.formData.name.$error">
-                  <span v-if="!$v.formData.name.required" class="text-danger">
+                <div v-if="$v.formData.value_en.$error">
+                  <span v-if="!$v.formData.value_en.required" class="text-danger">
                     {{ $tc('validation.required') }}
                   </span>
-                  <span v-if="!$v.formData.name.minLength" class="text-danger">
-                    {{ $tc('validation.name_min_length', $v.formData.name.$params.minLength.min, { count: $v.formData.name.$params.minLength.min }) }}
+                  <span v-if="!$v.formData.value_en.minLength" class="text-danger">
+                    {{ $tc('validation.name_min_length', $v.formData.value_en.$params.minLength.min, { count: $v.formData.value_en.$params.minLength.min }) }}
                   </span>
                 </div>
 
                 <label class="form-label">{{ $t('language.denmark') }}</label><span class="text-danger"> *</span>
                 <base-input
-                  :invalid="$v.formData.name.$error"
-                  v-model="formData.name"
+                  :invalid="$v.formData.value_da.$error"
+                  v-model="formData.value_da"
                   focus
                   type="text"
-                  name="en"
+                  name="value_da"
                   tab-index="1"
-                  @input="$v.formData.name.$touch()"
+                  @input="$v.formData.value_da.$touch()"
                 />
-                <div v-if="$v.formData.name.$error">
-                  <span v-if="!$v.formData.name.required" class="text-danger">
+                <div v-if="$v.formData.value_da.$error">
+                  <span v-if="!$v.formData.value_da.required" class="text-danger">
                     {{ $tc('validation.required') }}
                   </span>
-                  <span v-if="!$v.formData.name.minLength" class="text-danger">
-                    {{ $tc('validation.name_min_length', $v.formData.name.$params.minLength.min, { count: $v.formData.name.$params.minLength.min }) }}
+                  <span v-if="!$v.formData.value_da.minLength" class="text-danger">
+                    {{ $tc('validation.name_min_length', $v.formData.value_da.$params.minLength.min, { count: $v.formData.value_da.$params.minLength.min }) }}
                   </span>
                 </div>
               </div>
@@ -93,13 +93,19 @@ export default {
     return {
       isLoading: false,
       formData: {
-        name: null
+        parent: null,
+        value_en: null,
+        value_da: null
       }
     }
   },
   validations: {
     formData: {
-      name: {
+      value_en: {
+        required,
+        minLength: minLength(3)
+      },
+      value_da: {
         required,
         minLength: minLength(3)
       }
@@ -131,7 +137,11 @@ export default {
       let { data: { role } } = await this.fetchRole(this.$route.params.id)
 
       this.formData.id = role.id
-      this.formData.name = role.en
+      this.formData.parent = role.parent
+      this.formData.value_en = role.value_en
+      this.formData.value_da = role.value_da
+
+      console.log(this.formData)
     },
     async submitRoleData () {
       this.$v.formData.$touch()
@@ -146,20 +156,21 @@ export default {
         try {
           let response = await this.updateRole(this.formData)
           if (response.data.success) {
+            // window.i18n.locale = 
             window.toastr['success'](this.$t('roles.updated_message'))
-            this.$router.push('/admin/roles')
+            this.$router.push('/admin/language')
             this.isLoading = false
             return true
           } else {
             this.isLoading = false
             if (response.data.error) {
-              window.toastr['error'](this.$t('validation.email_already_taken'))
+              window.toastr['error'](this.$t('validation.value_en'))
             }
           }
         } catch (err) {
-          if (err.response.data.errors.email) {
+          if (err.response.data.errors.value_en) {
             this.isLoading = false
-            window.toastr['error'](this.$t('validation.email_already_taken'))
+            window.toastr['error'](this.$t('validation.value_en'))
           }
         }
       } else {

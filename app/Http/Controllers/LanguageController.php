@@ -30,10 +30,14 @@ class LanguageController extends Controller{
     }
 
     public function array_undot($dottedArray) {
+        // print_r(count($dottedArray));exit;
         $array = array();
         foreach ($dottedArray as $key => $value) {
+           
           array_set($array, $key, $value);
         }
+        // print_r($array);
+        // exit;
         return $array;
       }
 
@@ -140,11 +144,13 @@ class LanguageController extends Controller{
     public function edit($id)
     {
 
-        $id = decodeId($id);
+        // $id = decodeId($id);
 
-        $role = Role::findOrFail($id);
-
-        return view('admin.roles.edit',compact('role'));
+        $role = Language::findOrFail($id);
+        // dd($role);exit;
+        return response()->json([
+            'role' => $role
+        ]);
     }
 
     /**
@@ -157,21 +163,45 @@ class LanguageController extends Controller{
     public function update($id, Request $request)
     {
 
-        $id = decodeId($id);
-
         $this->validate($request, [
-            'name' => 'required|unique:roles,name,'.$id,
+            // 'name' => 'required|unique:roles,name,'.$id,
         ]);
 
         $requestData = $request->all();
-
-        $role = Role::findOrFail($id);
-
+        $role = Language::findOrFail($id);
         $role->update($requestData);
 
-        Session::flash('success', 'Role updated!');
+        //en.json file update
+        $arr = [];
+        $data1 = Language::select('key_value','value_en')->get();
+        foreach($data1 as $val)
+        {
+            $arr[$val['key_value']] = $val['value_en'];
+            
+        }
+        $data2 = $this->array_undot($arr);
+        $dataen = json_encode($data2,JSON_PRETTY_PRINT);
+      
+        file_put_contents(base_path('resources/assets/js/plugins/en.json'), stripslashes($dataen));
 
-        return redirect('admin/roles');
+        //de.json file update
+       
+        $arr = [];
+        $data1 = Language::select('key_value','value_da')->get();
+        foreach($data1 as $val)
+        {
+            $arr[$val['key_value']] = $val['value_da'];
+            
+        }
+        $data2 = $this->array_undot($arr);
+        $dataen = json_encode($data2,JSON_PRETTY_PRINT);
+      
+        file_put_contents(base_path('resources/assets/js/plugins/de.json'), stripslashes($dataen));
+
+        return response()->json([
+            'role' => $role,
+            'success' => true
+        ]);
     }
 
     /**
