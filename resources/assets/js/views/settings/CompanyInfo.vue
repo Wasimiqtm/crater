@@ -140,12 +140,13 @@
 import IconUpload from '../../components/icon/upload'
 import ImageBox from '../components/ImageBox.vue'
 import AvatarCropper from 'vue-avatar-cropper'
+import SiteHeader from '../layouts//partials/TheSiteHeader.vue'
 import { validationMixin } from 'vuelidate'
 import { mapActions } from 'vuex'
 const { required, email, maxLength } = require('vuelidate/lib/validators')
 
 export default {
-  components: { AvatarCropper, IconUpload, ImageBox },
+  components: { AvatarCropper, IconUpload, ImageBox, SiteHeader },
   mixins: [validationMixin],
   data () {
     return {
@@ -182,6 +183,7 @@ export default {
       fileObject: null
     }
   },
+  // props: ['previewLogo'],
   watch: {
     country (newCountry) {
       this.formData.country_id = newCountry.id
@@ -212,6 +214,7 @@ export default {
   mounted () {
     this.fetchCountry()
     this.setInitialData()
+    
   },
   methods: {
     ...mapActions('companyInfo', [
@@ -240,6 +243,7 @@ export default {
       this.formData.city = response.data.user.addresses[0].city
       this.country = response.data.user.addresses[0].country
       this.previewLogo = response.data.user.company.logo
+      // console.log(this.previewLogo)
     },
     async updateCompany () {
       this.$v.formData.$touch()
@@ -257,10 +261,12 @@ export default {
             name: this.fileObject.name,
             data: this.previewLogo
           }))
+
           await axios.post('/api/settings/company/upload-logo', logoData)
         }
         this.isLoading = false
         window.toastr['success'](this.$t('settings.company_info.updated_message'))
+        // console.log(this.previewLogo)
         return true
       }
       this.isLoading = false

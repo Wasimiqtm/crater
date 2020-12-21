@@ -167,6 +167,7 @@
     "select_currency": "Select currency",
     "select_a_customer": "Select a customer",
     "type_or_click": "Type or click to select",
+   
 
     "confirm_delete": "You will not be able to recover this customer and all the related Invoices, Estimates and Payments. | You will not be able to recover these customers and all the related Invoices, Estimates and Payments.",
     "created_message": "Customer created successfully",
@@ -266,9 +267,11 @@
     },
     "language": {
       "title": "Langauge",
+      "customer": "Customer",
       "add_language": "Add Langauge",
       "contacts_list": "Langauge List",
       "name": "Name",
+      "key": "Key Value",
       "display_name": "Display Name",
       "primary_contact_name": "Primary Contact Name",
       "contact_name": "Contact Name",

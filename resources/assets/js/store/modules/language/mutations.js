@@ -14,7 +14,7 @@ export default {
   },
 
   [types.UPDATE_LANGUAGE] (state, data) {
-    let pos = state.language.findIndex(anguage => language.id === data.language.id)
+    let pos = state.language.findIndex(Language => language.id === data.language.id)
 
     state.language[pos] = data.language
   },
@@ -25,7 +25,7 @@ export default {
   },
 
   [types.DELETE_MULTIPLE_LANGUAGE] (state, selectedLanguage) {
-    selectedLanguage.forEach((anguage) => {
+    selectedLanguage.forEach((Language) => {
       let index = state.language.findIndex(_cust => _cust.id === language.id)
       state.language.splice(index, 1)
     })

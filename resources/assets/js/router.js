@@ -413,6 +413,11 @@ const routes = [
         path: 'language',
         component: Language
       },
+      // {
+      //   path: 'language/edit',
+      //   name: 'language.edit',
+      //   component: LanguageEdit
+      // },
     ]
   },
 

@@ -3,7 +3,7 @@
     <a href="/" class="brand-main">
       <img
         id="logo-white"
-        src="/assets/img/logo-white.png"
+        :src="companyPicture"
         alt="Crater Logo"
         class="d-none d-md-inline"
       >
@@ -81,23 +81,57 @@
 </template>
 <script type="text/babel">
 import { mapGetters, mapActions } from 'vuex'
+import CompanyInfo from '../../settings/CompanyInfo.vue'
 
 export default {
+
+  data(){
+    return {
+    uploadImage:null,
+  }},
+
+  components:{
+    CompanyInfo
+  },
+ 
   computed: {
     ...mapGetters('userProfile', [
       'user'
     ]),
+
+     ...mapGetters('company', {
+      selectedCompany: 'getSelectedCompany',
+      companies: 'getCompanies'
+    }),
+
+    ...mapGetters('companyInfo', {
+      companies: 'company'
+    }),
+
     profilePicture () {
       if (this.user && this.user.avatar !== null) {
         return this.user.avatar
       } else {
         return '/images/default-avatar.jpg'
       }
+    },
+    companyPicture () {
+      if (this.selectedCompany.logo !== null) {
+        return this.selectedCompany.logo
+      } else {
+        return '/images/default-picture.png'
+      }
     }
   },
   created () {
     this.loadData()
+    // console.log(CompanyInfo.previewLogo)
   },
+
+  // mounted () {
+  //     this.uploadImage = this.getUpdatedImage()
+  //     console.log(this.uploadImage)
+  // },
   methods: {
     ...mapActions('userProfile', [
       'loadData'
@@ -110,7 +144,8 @@ export default {
     ]),
     onNavToggle () {
       this.$utils.toggleSidebar()
-    }
+    },
+
   }
 }
 </script>

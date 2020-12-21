@@ -33,18 +33,13 @@ export const fetchLanguage = ({ commit, dispatch, state }) => {
 //   })
 // }
 
-// export const updateRole = ({ commit, dispatch, state }, data) => {
-//   return new Promise((resolve, reject) => {
-//     window.axios.put(`/api/roles/${data.id}`, data).then((response) => {
-//       if(response.data.success){
-//         commit(types.UPDATE_ROLE, response.data)
-//       }
-//       resolve(response)
-//     }).catch((err) => {
-//       reject(err)
-//     })
-//   })
-// }
+export const updateLanguage = ({ commit, dispatch, state }, data) => {
+  return new Promise((resolve, reject) => {
+   
+        commit(types.UPDATE_LANGUAGE, data)
+     
+  })
+}
 
 // export const deleteRole = ({ commit, dispatch, state }, id) => {
 //   return new Promise((resolve, reject) => {
