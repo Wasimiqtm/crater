@@ -72,6 +72,11 @@ class User extends Authenticatable implements HasMedia
         return ($this->role == 'admin');
     }
 
+    public function isSubAdmin()
+    {
+        return ($this->role == 'subAdmin');
+    }
+
     public static function login($request)
     {
         $remember = $request->remember;
@@ -174,6 +179,11 @@ class User extends Authenticatable implements HasMedia
         return $query->where('role', 'customer');
     }
 
+    public function scopeSubAdmin($query)
+    {
+        return $query->where('role', 'subadmin');
+    }
+
     public function scopeApplyFilters($query, array $filters)
     {
         $filters = collect($filters);
@@ -245,6 +255,10 @@ class User extends Authenticatable implements HasMedia
 
         if ($customer->addresses()->exists()) {
             $customer->addresses()->delete();
+        }
+
+        if ($customer->company()->exists()) {
+            $customer->company()->delete();
         }
 
         $customer->delete();

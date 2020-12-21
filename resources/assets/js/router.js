@@ -43,6 +43,10 @@ import AssignPermission from './views/roles/Assign.vue'
 import PermissionIndex from './views/permissions/Index.vue'
 import PermissionCreate from './views/permissions/Create.vue'
 
+// SubAdmins
+import SubAdminIndex from './views/subadmins/Index.vue'
+import SubAdminCreate from './views/subadmins/Create.vue'
+
 // Items
 import ItemsIndex from './views/items/Index.vue'
 import ItemCreate from './views/items/Create.vue'
@@ -87,6 +91,7 @@ import UpdateApp from './views/settings/UpdateApp.vue'
 
 // Language
 import Language from './views/language/Index.vue'
+import LanguageCreate from './views/language/Create.vue'
 
 
 import Wizard from './views/wizard/Index.vue'
@@ -407,17 +412,32 @@ const routes = [
         name: 'permissions.assign',
         component: AssignPermission
       },
+      // Subadmins
+      {
+        path: 'subadmins',
+        component: SubAdminIndex
+      },
+      {
+        path: 'subadmins/create',
+        name: 'subadmins.create',
+        component: SubAdminCreate
+      },
+      {
+        path: 'subadmins/:id/edit',
+        name: 'subadmins.edit',
+        component: SubAdminCreate
+      },
 
       // Langauge
       {
         path: 'language',
         component: Language
       },
-      // {
-      //   path: 'language/edit',
-      //   name: 'language.edit',
-      //   component: LanguageEdit
-      // },
+      {
+        path: 'language/:id/edit',
+        name: 'language.edit',
+        component: LanguageCreate
+      },
     ]
   },
 

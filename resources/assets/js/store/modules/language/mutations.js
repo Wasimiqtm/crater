@@ -1,44 +1,44 @@
 import * as types from './mutation-types'
 
 export default {
-  [types.BOOTSTRAP_LANGUAGE] (state, language) {
-    state.language = language
+  [types.BOOTSTRAP_ROLES] (state, roles) {
+    state.roles = roles
   },
 
-  [types.SET_TOTAL_LANGUAGE] (state, totalLanguage) {
-    state.totalLanguage = totalLanguage
+  [types.SET_TOTAL_ROLES] (state, totalRoles) {
+    state.totalRoles = totalRoles
   },
 
-  [types.ADD_LANGUAGE] (state, data) {
-    state.language.push(data.language)
+  [types.ADD_ROLE] (state, data) {
+    state.roles.push(data.role)
   },
 
-  [types.UPDATE_LANGUAGE] (state, data) {
-    let pos = state.language.findIndex(Language => language.id === data.language.id)
+  [types.UPDATE_ROLE] (state, data) {
+    let pos = state.roles.findIndex(role => role.id === data.role.id)
 
-    state.language[pos] = data.language
+    state.roles[pos] = data.role
   },
 
-  [types.DELETE_LANGUAGE] (state, id) {
-    let index = state.language.findIndex(LANGUAGE => language.id === id)
-    state.language.splice(index, 1)
+  [types.DELETE_ROLE] (state, id) {
+    let index = state.roles.findIndex(role => role.id === id)
+    state.roles.splice(index, 1)
   },
 
-  [types.DELETE_MULTIPLE_LANGUAGE] (state, selectedLanguage) {
-    selectedLanguage.forEach((Language) => {
-      let index = state.language.findIndex(_cust => _cust.id === language.id)
-      state.language.splice(index, 1)
+  [types.DELETE_MULTIPLE_ROLES] (state, selectedRoles) {
+    selectedRoles.forEach((role) => {
+      let index = state.roles.findIndex(_cust => _cust.id === role.id)
+      state.roles.splice(index, 1)
     })
 
-    state.selectedLanguage = []
+    state.selectedRoles = []
   },
 
-  [types.SET_SELECTED_LANGUAGE] (state, data) {
-    state.selectedLanguage = data
+  [types.SET_SELECTED_ROLES] (state, data) {
+    state.selectedRoles = data
   },
 
-  [types.RESET_SELECTED_LANGUAGE] (state, data) {
-    state.selectedLanguage = null
+  [types.RESET_SELECTED_ROLE] (state, data) {
+    state.selectedRole = null
   },
 
   [types.SET_SELECT_ALL_STATE] (state, data) {

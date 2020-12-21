@@ -45,47 +45,16 @@ class LanguageController extends Controller{
     public function index(Request $request){
 
         
-        // $limit = $request->has('limit') ? $request->limit : 10;
+        $limit = $request->has('limit') ? $request->limit : 10;
+        $roles = Language::query();
+            $roles = $roles->where('en', 'LIKE', "%{$request->name}%")
+            ->paginate($limit);
 
-            // Read File
-        
-            $jsonStringen = file_get_contents(base_path('resources/assets/js/plugins/en.json'));
-            $jsonStringda = file_get_contents(base_path('resources/assets/js/plugins/de.json'));
-            // print_r($jsonString);
-            $dataen = json_decode($jsonStringen, TRUE);
-            $datada = json_decode($jsonStringda, TRUE);
-        
-            // print_r($data); 
-            // print_r(list($keys, $values) = array_divide($data));
-            $arrayen = array_dot($dataen);
-            $arrayda = array_dot($datada);
-            // print_r($arrayda); exit;
+        $siteData = [
+            'roles' => $roles
+        ];
 
-            // foreach( $codes as $index => $code ) {
-            //     echo '<option value="' . $code . '">' . $names[$index] . '</option>';
-            //  }
-
-            // foreach (array_combine($arrayen, $arrayda) as $code => $name) {
-            //     print $code . 'is your Id code and '  . $name . 'is your name';
-            //   }
-
-            foreach($arrayen as $key => $value)
-    {
-        // print_r($arrayda[$key]); 
-        // print_r("\n"); 
-                $container = new Language([
-                    'key_value' => $key,
-                    'value_en' => $value,
-                    'value_da' => $arrayda[$key]
-                ]);
-
-                $container->save();
-    }
-
-
-
-            
-        //    return response()->json($array);
+        return response()->json($siteData);
     
     }
 

@@ -12,6 +12,7 @@ import customer from './modules/customer'
 import role from './modules/role'
 import language from './modules/language'
 import permission from './modules/permission'
+import subAdmin from './modules/subadmin'
 import company from './modules/company'
 import companyInfo from './modules/settings/company-info'
 import dashboard from './modules/dashboard'
@@ -54,6 +55,7 @@ export default new Vuex.Store({
     role,
     language,
     permission,
+    subAdmin,
     dashboard,
     estimate,
     item,
