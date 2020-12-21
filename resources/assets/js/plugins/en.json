@@ -16,6 +16,7 @@
     "subAdmins": "Sub Admins"
   },
   "general": {
+    "not_allowed": "Sorry! You are not allowed to view this page",
     "view_pdf": "View PDF",
     "copy_pdf_url": "Copy PDF Url",
     "download_pdf": "Download PDF",
@@ -71,6 +72,7 @@
     "list_is_empty": "List is empty.",
     "no_tax_found": "No tax found!",
     "four_zero_four": "404",
+    "four_zero_three": "403",
     "you_got_lost": "Whoops! You got Lost!",
     "go_home": "Go Home",
     "test_mail_conf": "Test Mail Configuration",

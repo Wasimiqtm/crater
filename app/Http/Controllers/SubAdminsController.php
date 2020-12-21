@@ -14,6 +14,7 @@ use Crater\Currency;
 use Crater\CompanySetting;
 use Crater\Address;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class SubAdminsController extends Controller
 {
@@ -75,6 +76,9 @@ class SubAdminsController extends Controller
         $customer->role = 'subadmin';
         $customer->password = Hash::make($request->password);
         $customer->save();
+
+        /*assign role to the subadmin*/
+        $customer->assignRole('subadmin');
 
         if ($request->addresses) {
             foreach ($request->addresses as $address) {

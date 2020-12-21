@@ -16,10 +16,11 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, Notifiable, HasMediaTrait;
+    use HasApiTokens, Notifiable, HasMediaTrait, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -55,6 +56,9 @@ class User extends Authenticatable implements HasMedia
         'formattedCreatedAt',
         'avatar'
     ];
+
+    /*assign guard*/
+    protected $guard_name = 'api';
 
     /**
      * Find the user instance for the given username.
