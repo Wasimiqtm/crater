@@ -49,6 +49,31 @@ class PermissionController extends Controller{
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function abilities()
+    {
+        $role = Role::where('name', auth()->user()->role)->first();
+        $permissions = Permission::all();
+
+        $abilities = [];
+        foreach($permissions as $item)
+        {
+            if($role->hasPermissionTo($item->name))
+            {
+                $abilities[] = $item->name;
+            }
+        }
+        $data = [
+            'abilities' => $abilities
+        ];
+
+        return response()->json($data);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -154,43 +179,5 @@ class PermissionController extends Controller{
         return response()->json([
             'success' => true
         ]);
-    }
-
-
-    /**
-     * Get all permissions.
-     *
-     * @param  int  $permission_id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getRolePermissions($permission_id){
-
-        $id = decodeId($permission_id);
-
-        $permission = Role::find($id);
-
-        $permissions = Permission::all();
-
-        return view('admin.roles.permissions',compact('role','permissions'));
-    }
-
-
-    public function updateRolePermission($permission_id, Request $request){
-
-        $id = decodeId($permission_id);
-
-        $permissions = $request->permissions;
-
-        $permission = Role::findById($id);
-
-        DB::table('role_has_permissions')->where('role_id', $id)->delete();
-
-        $permission->syncPermissions($permissions);
-
-        Session::flash('success', 'Permission updated!');
-
-        return redirect('admin/roles');
-
     }
 }

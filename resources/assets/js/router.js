@@ -457,6 +457,10 @@ router.beforeEach((to, from, next) => {
     if (!store.getters['auth/isAuthenticated']) {
       return next('/login')
     }
+    /*let response = axios.get(`/api/permission/abilities`)
+    if (response.data) {
+      console.log(response.data);
+    }*/
   }
 
   if (to.matched.some(m => m.meta.redirectIfAuthenticated) && store.getters['auth/isAuthenticated']) {

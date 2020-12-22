@@ -213,6 +213,11 @@ Route::group(['middleware' => 'api'], function () {
             'uses' => 'PermissionController@delete'
         ]);
 
+        Route::get('/permission/abilities', [
+            'as' => 'permission.abilities',
+            'uses' => 'PermissionController@abilities'
+        ]);
+
         Route::resource('permission', 'PermissionController');
 
         // Sub Admins
