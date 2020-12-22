@@ -8,7 +8,7 @@
             <router-link slot="item-title" to="/admin/dashboard">{{ $t('general.home') }}</router-link>
           </li>
           <li class="breadcrumb-item">
-            <router-link slot="item-title" to="/admin/roles">{{ $tc('language.title', 2) }}</router-link>
+            <router-link slot="item-title" to="/admin/language">{{ $tc('language.title', 2) }}</router-link>
           </li>
           <li class="breadcrumb-item">
             {{ isEdit ? $t('language.edit_language') : $t('roles.new_role') }}

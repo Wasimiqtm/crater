@@ -62,9 +62,43 @@
           <hr> <!-- second row complete  -->
         </div>
 
+        
+        <div v-if="isCVR" class="card-body">
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="input-group">
+                <!-- <label for="cvr">Enter CVR Number</label> -->
+                 <base-input
+                  :invalid="$v.formData.cvr.$error"
+                  v-model="formData.cvr"
+                  focus
+                  type="text"
+                  name="name"
+                  placeholder="Enter CVR Number"
+                  class="flex"
+                  tab-index="1"
+                  @input="$v.formData.cvr.$touch()"
+                />
+                <div v-if="$v.formData.cvr.$error">
+                  <span v-if="!$v.formData.cvr.required" class="text-danger">
+                    {{ $tc('validation.required') }}
+                  </span>
+                  <span v-if="!$v.formData.cvr.minLength" class="text-danger">
+                    {{ $tc('validation.name_min_length', $v.formData.cvr.$params.minLength.min, { count: $v.formData.cvr.$params.minLength.min }) }}
+                  </span>
+                </div>
+                
+                <button :disabled="this.disable" style="height:50px; width=200px;" @click="getCompanyInfo"  :class="{ 'active':  isP  == true }" class="btn btn-primary btn-outline" type="button" aria-pressed="false" id="private_btn">{{this.cvrText}}</button>
+              </div>
+            </div>
+          </div>
+          <!-- <hr> second row complete  -->
+        </div>
+
+
+
         <div v-if="isBusiness" class="card-body">
           <div class="row">
-            <!-- <div class="text-center section-title col-sm-12">{{ $t('customers.customer_type') }}</div> -->
             <div class="col-sm-12">
               <div class="form-group">
                 <div>
@@ -91,28 +125,10 @@
                     </li>
                   </ul>
                 </div>
-                <!-- <label class="form-label">{{ $t('customers.display_name') }}</label><span class="text-danger"> *</span> -->
-                <!-- <base-input
-                  :invalid="$v.formData.name.$error"
-                  v-model="formData.name"
-                  focus
-                  type="text"
-                  name="name"
-                  tab-index="1"
-                  @input="$v.formData.name.$touch()"
-                />
-                <div v-if="$v.formData.name.$error">
-                  <span v-if="!$v.formData.name.required" class="text-danger">
-                    {{ $tc('validation.required') }}
-                  </span>
-                  <span v-if="!$v.formData.name.minLength" class="text-danger">
-                    {{ $tc('validation.name_min_length', $v.formData.name.$params.minLength.min, { count: $v.formData.name.$params.minLength.min }) }}
-                  </span>
-                </div> -->
               </div>
             </div>
           </div>
-          <hr> <!-- second row complete  -->
+          <!-- <hr> second row complete  -->
         </div>
       </div>
       <!-- /////////////// -->
@@ -440,9 +456,12 @@ export default {
   mixins: [validationMixin],
   data () {
     return {
+      cvrText:"Get Info",
+      disable:false,
       isPrivate:false,
       isBusiness:false,
       buttonValue:null,
+      isCVR:false,
       isP:false,
       isB:false,
       isY:true,
@@ -456,6 +475,7 @@ export default {
         currency_id: null,
         website: null,
         removelines:null,
+        cvr:null,
         addresses: []
       },
      
@@ -494,6 +514,10 @@ export default {
   validations: {
     formData: {
       name: {
+        required,
+        minLength: minLength(3)
+      },
+      cvr:{
         required,
         minLength: minLength(3)
       },
@@ -607,6 +631,31 @@ export default {
       this.isP = false;
       this.isB = true;
       this.isY = true;
+    },
+     showCVR(){
+      this.isBusiness = false;
+      this.isPrivate = false;
+      this.isCVR = true;
+      this.buttonValue = 2;
+      this.isP = false;
+      this.isB = true;
+      this.isY = false;
+    },
+
+    getCompanyInfo(){
+      // console.log('https://cvrapi.dk/api?search='+this.formData.cvr+'&country=dk')
+      this.cvrText = "Getting Information Please wait..."
+      this.disable = true
+      axios.get('https://cvrapi.dk/api?search='+this.formData.cvr+'&country=dk')
+      .then(res => {
+        console.log(res)
+        this.cvrText = "Get Info"
+        this.disable = false
+      })
+      .catch(err => {
+        console.log(err)})
+        this.cvrText = "Get Info"
+        this.disable = false
     },
     currencyNameWithCode ({name, code}) {
       return `${code} - ${name}`
